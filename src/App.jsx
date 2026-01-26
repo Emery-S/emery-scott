@@ -8,7 +8,6 @@ const IMAGES = {
   creamBackdrop: '/images/Backdrops/cream.png',
   greenBackdrop: '/images/Backdrops/green.png',
   aboutPhoto: '/images/Backdrops/about-photo.jpg',
-  parchment: '/images/Backdrops/parchment.png',
 };
 
 // ============================================
@@ -103,7 +102,7 @@ export default function EmeryScottPortfolio() {
           textDecoration: 'none',
           transition: 'color 0.3s ease',
         }}>IG</a>
-        <a href="https://www.youtube.com/@emeryscott" target="_blank" rel="noopener noreferrer" style={{
+        <a href="https://www.youtube.com/@EmeryGScott" target="_blank" rel="noopener noreferrer" style={{
           color: 'rgba(232, 223, 208, 0.7)',
           fontSize: '0.75rem',
           fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -118,7 +117,7 @@ export default function EmeryScottPortfolio() {
           letterSpacing: '0.1em',
           textDecoration: 'none',
           transition: 'color 0.3s ease',
-        }}>VM</a>
+        }}>FB</a>
       </div>
 
       {/* Fixed Menu */}
@@ -913,7 +912,7 @@ function FooterSection() {
             transition: 'color 0.3s ease',
           }}>YOUTUBE</a>
           <span style={{ color: 'rgba(180, 150, 120, 0.3)' }}>·</span>
-          <a href="https://vimeo.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
+          <a href="facebook.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
             color: 'rgba(232, 223, 208, 0.6)',
             fontSize: '0.8rem',
             fontFamily: "'Cormorant Garamond', Georgia, serif",
