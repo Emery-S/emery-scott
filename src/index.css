@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: #0a0908;
+  color: #e8dfd0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1512;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(180, 150, 120, 0.4);
+  border-radius: 4px;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: #e8dfd0;
+}
+
+::placeholder {
+  color: rgba(180, 150, 120, 0.5);
+}
+
+a:hover {
+  color: rgba(212, 175, 55, 0.9) !important;
+}
