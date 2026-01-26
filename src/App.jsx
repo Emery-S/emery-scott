@@ -8,6 +8,7 @@ const IMAGES = {
   creamBackdrop: '/images/Backdrops/cream.png',
   greenBackdrop: '/images/Backdrops/green.png',
   aboutPhoto: '/images/Backdrops/about-photo.jpg',
+  mainBg: '/images/Backdrops/main-bg.png',
 };
 
 // ============================================
@@ -78,8 +79,15 @@ export default function EmeryScottPortfolio() {
 
   return (
     <div style={styles.page}>
-      {/* Cream backdrop - always present */}
-      <div style={styles.creamBackdrop} />
+      {/* Main site background - continuous warm brown */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundImage: `url(${IMAGES.mainBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        zIndex: -1,
+      }} />
 
       {/* Candlelit Reveal Animation */}
       <CandlelitReveal />
@@ -170,62 +178,44 @@ export default function EmeryScottPortfolio() {
 }
 
 // ============================================
-// CANDLELIT REVEAL - Dark to warm light
+// CANDLELIT REVEAL - Smooth center glow
 // ============================================
 function CandlelitReveal() {
-  const [phase, setPhase] = useState(0);
-  // Phase 0: Complete darkness
-  // Phase 1: First flicker of warmth
-  // Phase 2: Light spreading
-  // Phase 3: Fully revealed
-
+  const [stage, setStage] = useState(0);
+  
   useEffect(() => {
-    const timer1 = setTimeout(() => setPhase(1), 300);
-    const timer2 = setTimeout(() => setPhase(2), 1000);
-    const timer3 = setTimeout(() => setPhase(3), 2200);
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-    };
+    const timers = [
+      setTimeout(() => setStage(1), 100),
+      setTimeout(() => setStage(2), 800),
+      setTimeout(() => setStage(3), 1600),
+      setTimeout(() => setStage(4), 2400),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, []);
+
+  if (stage === 4) return null;
 
   return (
     <div style={{
-      ...styles.candlelitOverlay,
-      opacity: phase >= 3 ? 0 : 1,
-      pointerEvents: phase >= 3 ? 'none' : 'auto',
+      position: 'fixed',
+      inset: 0,
+      zIndex: 9999,
+      background: '#0a0908',
+      opacity: stage === 3 ? 0 : 1,
+      transition: 'opacity 0.8s ease',
+      pointerEvents: 'none',
     }}>
-      {/* Dark veil that lifts */}
       <div style={{
-        ...styles.darkVeil,
-        opacity: phase === 0 ? 1 : phase === 1 ? 0.85 : phase === 2 ? 0.4 : 0,
-      }} />
-      
-      {/* Warm glow that grows from center */}
-      <div style={{
-        ...styles.warmGlow,
-        opacity: phase >= 1 ? 1 : 0,
-        transform: phase === 1 
-          ? 'scale(0.3)' 
-          : phase === 2 
-            ? 'scale(1.5)' 
-            : 'scale(3)',
-      }} />
-      
-      {/* Secondary candle flickers */}
-      <div style={{
-        ...styles.candleFlicker,
-        left: '25%',
-        opacity: phase >= 2 ? 0.6 : 0,
-        transform: phase >= 2 ? 'scale(1)' : 'scale(0.5)',
-      }} />
-      <div style={{
-        ...styles.candleFlicker,
-        right: '25%',
-        opacity: phase >= 2 ? 0.6 : 0,
-        transform: phase >= 2 ? 'scale(1)' : 'scale(0.5)',
-        transitionDelay: '0.2s',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: stage >= 1 ? (stage >= 2 ? '300vmax' : '150px') : '0px',
+        height: stage >= 1 ? (stage >= 2 ? '300vmax' : '150px') : '0px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(212,175,55,0.4) 0%, rgba(180,140,60,0.2) 30%, rgba(120,80,40,0.1) 60%, transparent 100%)',
+        transition: stage >= 2 ? 'all 1.2s cubic-bezier(0.4, 0, 0.2, 1)' : 'all 0.6s ease',
+        opacity: stage >= 1 ? 1 : 0,
       }} />
     </div>
   );
@@ -266,22 +256,52 @@ function HeroSection() {
 }
 
 // ============================================
-// QUOTE SECTION - On Parchment
+// QUOTE SECTION - Floating on main background
 // ============================================
 function QuoteSection() {
   return (
-    <section style={styles.quoteSection}>
-      {/* Teal fade from above */}
-      <div style={styles.greenFade} />
-      
-      {/* Parchment paper */}
-      <div style={styles.parchmentPaper}>
-        <span style={styles.quoteMark}>"</span>
-        <p style={styles.quoteText}>
+    <section style={{
+      position: 'relative',
+      padding: '6rem 2rem',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: 'transparent',
+    }}>
+      <div style={{
+        maxWidth: '700px',
+        textAlign: 'center',
+        padding: '3rem',
+      }}>
+        <span style={{
+          fontFamily: "'Playfair Display', Georgia, serif",
+          fontSize: '4rem',
+          color: 'rgba(212, 175, 55, 0.4)',
+          display: 'block',
+          lineHeight: 0.5,
+          marginBottom: '1rem',
+        }}>"</span>
+        <p style={{
+          fontFamily: "'Playfair Display', Georgia, serif",
+          fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
+          fontWeight: 400,
+          fontStyle: 'italic',
+          lineHeight: 1.9,
+          color: '#e8dfd0',
+          margin: 0,
+          textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+        }}>
           I have been with story. I have gone without. In only one of those states 
           did I feel I could truly live and so it lives always.
         </p>
-        <p style={styles.quoteAttribution}>— E. Scott</p>
+        <p style={{
+          marginTop: '1.5rem',
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '0.9rem',
+          fontWeight: 500,
+          letterSpacing: '0.15em',
+          color: 'rgba(212, 175, 55, 0.7)',
+        }}>— E. Scott</p>
       </div>
     </section>
   );
@@ -406,9 +426,7 @@ function KeyAspectsSection() {
 
   return (
     <section ref={sectionRef} style={{
-      backgroundImage: 'url(/images/Backdrops/key-aspects-bg.png)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center top',
+      background: 'transparent',
       padding: '6rem 2rem',
       position: 'relative',
     }}>
@@ -604,9 +622,7 @@ function ReviewsSection() {
 
   return (
     <section style={{
-      backgroundImage: 'url(/images/Backdrops/key-aspects-bg.png)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center bottom',
+      background: 'transparent',
       padding: '3rem 0',
       position: 'relative',
       overflow: 'hidden',
@@ -950,7 +966,6 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
   }, [activeWing]);
   
   // Determine which background should show
-  const showRotundaBg = !activeWing; // Door selection state
   const showVoiceOverBg = activeWing === 'acting' && actingView === 'voiceover';
   const showActingBg = activeWing === 'acting' && actingView !== 'voiceover';
   const showModelingBg = activeWing === 'modeling';
@@ -958,18 +973,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
   
   return (
     <section ref={ref} style={styles.rotunda}>
-      {/* LAYERED BACKGROUNDS - all overlays */}
-      
-      {/* Rotunda: Door selection state */}
-      <div style={{
-        ...styles.rotundaBackground,
-        backgroundImage: 'url(/images/Backdrops/rotunda-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        opacity: showRotundaBg ? 1 : 0,
-        zIndex: 1,
-        transition: 'opacity 0.8s ease',
-      }} />
+      {/* LAYERED BACKGROUNDS - wing overlays only */}
       
       {/* Acting: Rich theatrical brocade */}
       <div style={{
@@ -2548,8 +2552,9 @@ const styles = {
     fontWeight: 600,
     letterSpacing: '0.35em',
     textTransform: 'uppercase',
-    color: '#8b7355',
+    color: 'rgba(212, 175, 55, 0.8)',
     marginBottom: '2rem',
+    textShadow: '0 1px 3px rgba(0,0,0,0.4)',
   },
   photoFrame: {
     aspectRatio: '3/4',
@@ -2569,16 +2574,18 @@ const styles = {
     fontWeight: 400,
     fontStyle: 'italic',
     lineHeight: 1.9,
-    color: '#5a4a40',
+    color: 'rgba(232, 223, 208, 0.8)',
     marginBottom: '1.5rem',
+    textShadow: '0 1px 3px rgba(0,0,0,0.3)',
   },
   aboutHeadline: {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: 'clamp(1.5rem, 2.8vw, 2rem)',
     fontWeight: 500,
     lineHeight: 1.5,
-    color: '#3d3530',
+    color: '#e8dfd0',
     margin: 0,
+    textShadow: '0 2px 6px rgba(0,0,0,0.4)',
   },
   aboutSubsection: { marginTop: '2rem' },
   curiousText: {
@@ -2587,17 +2594,18 @@ const styles = {
     fontWeight: 400,
     fontStyle: 'italic',
     lineHeight: 1.8,
-    color: '#7a6a5a',
+    color: 'rgba(180, 150, 120, 0.85)',
+    textShadow: '0 1px 3px rgba(0,0,0,0.3)',
   },
   clickReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '1.05rem',
     fontWeight: 500,
-    color: '#5a4a40',
+    color: 'rgba(212, 175, 55, 0.8)',
     marginTop: '1.2rem',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: '#8b5a5a',
+    textDecorationColor: 'rgba(212, 175, 55, 0.5)',
     textUnderlineOffset: '4px',
   },
   bioExpanded: {
@@ -2606,25 +2614,26 @@ const styles = {
   },
   bioContent: {
     paddingTop: '1.2rem',
-    borderTop: '1px solid rgba(139, 90, 90, 0.2)',
+    borderTop: '1px solid rgba(180, 150, 120, 0.3)',
   },
   bioParagraph: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '1rem',
     fontWeight: 400,
     lineHeight: 1.9,
-    color: '#5a4a40',
+    color: 'rgba(232, 223, 208, 0.8)',
     marginBottom: '1.2rem',
+    textShadow: '0 1px 3px rgba(0,0,0,0.3)',
   },
   closeReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '1.05rem',
     fontWeight: 500,
-    color: '#5a4a40',
+    color: 'rgba(212, 175, 55, 0.8)',
     marginTop: '1.5rem',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: '#8b5a5a',
+    textDecorationColor: 'rgba(212, 175, 55, 0.5)',
     textUnderlineOffset: '4px',
   },
 
