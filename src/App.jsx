@@ -110,7 +110,7 @@ export default function EmeryScottPortfolio() {
           textDecoration: 'none',
           transition: 'color 0.3s ease',
         }}>YT</a>
-        <a href="https://vimeo.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
+        <a href="https://www.facebook.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
           color: 'rgba(232, 223, 208, 0.7)',
           fontSize: '0.75rem',
           fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -153,14 +153,6 @@ export default function EmeryScottPortfolio() {
         onCloseWing={closeWing}
         startInVoiceOver={startInVoiceOver}
       />
-
-      {/* Brown transition spacer */}
-      <div style={{
-        backgroundImage: 'url(/images/Backdrops/rotunda-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '8rem',
-      }} />
 
       {/* Key Aspects Section */}
       <KeyAspectsSection />
@@ -903,7 +895,7 @@ function FooterSection() {
             transition: 'color 0.3s ease',
           }}>INSTAGRAM</a>
           <span style={{ color: 'rgba(180, 150, 120, 0.3)' }}>·</span>
-          <a href="https://www.youtube.com/@emeryscott" target="_blank" rel="noopener noreferrer" style={{
+          <a href="https://www.youtube.com/@EmeryGScott" target="_blank" rel="noopener noreferrer" style={{
             color: 'rgba(232, 223, 208, 0.6)',
             fontSize: '0.8rem',
             fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -912,14 +904,14 @@ function FooterSection() {
             transition: 'color 0.3s ease',
           }}>YOUTUBE</a>
           <span style={{ color: 'rgba(180, 150, 120, 0.3)' }}>·</span>
-          <a href="facebook.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
+          <a href="https://www.facebook.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
             color: 'rgba(232, 223, 208, 0.6)',
             fontSize: '0.8rem',
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             letterSpacing: '0.15em',
             textDecoration: 'none',
             transition: 'color 0.3s ease',
-          }}>VIMEO</a>
+          }}>FACEBOOK</a>
         </div>
 
         {/* Divider */}
@@ -958,6 +950,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
   }, [activeWing]);
   
   // Determine which background should show
+  const showRotundaBg = !activeWing; // Door selection state
   const showVoiceOverBg = activeWing === 'acting' && actingView === 'voiceover';
   const showActingBg = activeWing === 'acting' && actingView !== 'voiceover';
   const showModelingBg = activeWing === 'modeling';
@@ -965,15 +958,17 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
   
   return (
     <section ref={ref} style={styles.rotunda}>
-      {/* LAYERED BACKGROUNDS - base always visible to prevent flash */}
+      {/* LAYERED BACKGROUNDS - all overlays */}
       
-      {/* Base layer: leather rotunda - always visible as foundation */}
+      {/* Rotunda: Door selection state */}
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/rotunda-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        zIndex: 0,
+        opacity: showRotundaBg ? 1 : 0,
+        zIndex: 1,
+        transition: 'opacity 0.8s ease',
       }} />
       
       {/* Acting: Rich theatrical brocade */}
@@ -984,6 +979,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
         backgroundPosition: 'center',
         opacity: showActingBg ? 1 : 0,
         zIndex: 1,
+        transition: 'opacity 0.8s ease',
       }} />
       
       {/* VoiceOver: Deep atmospheric backdrop */}
@@ -994,6 +990,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
         backgroundPosition: 'center',
         opacity: showVoiceOverBg ? 1 : 0,
         zIndex: 2,
+        transition: 'opacity 0.8s ease',
       }} />
       
       {/* Modeling: Soft lavender with filigree */}
@@ -1004,6 +1001,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
         backgroundPosition: 'center',
         opacity: showModelingBg ? 1 : 0,
         zIndex: 1,
+        transition: 'opacity 0.8s ease',
       }} />
       
       {/* Writing: Warm parchment with script */}
@@ -1014,6 +1012,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
         backgroundPosition: 'center',
         opacity: showWritingBg ? 1 : 0,
         zIndex: 1,
+        transition: 'opacity 0.8s ease',
       }} />
 
       {/* Fire/atmosphere texture for acting wing (not voiceover) */}
@@ -2491,9 +2490,10 @@ const styles = {
     position: 'relative',
     maxWidth: '700px',
     padding: '4rem 5rem',
-    backgroundImage: `url(${IMAGES.parchment})`,
+    backgroundImage: `url(${IMAGES.creamBackdrop})`,
     backgroundColor: '#f5f0e6',
     backgroundSize: 'cover',
+    backgroundPosition: 'center',
     boxShadow: '0 8px 40px rgba(0,0,0,0.15), 0 2px 10px rgba(0,0,0,0.1)',
     textAlign: 'center',
   },
