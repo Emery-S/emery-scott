@@ -9,6 +9,7 @@ const IMAGES = {
   greenBackdrop: '/images/Backdrops/green.png',
   aboutPhoto: '/images/Backdrops/about-photo.jpg',
   mainBg: '/images/Backdrops/main-bg.png',
+  mainBgAlt: '/images/Backdrops/main-bg-alt.png',
 };
 
 // ============================================
@@ -79,16 +80,6 @@ export default function EmeryScottPortfolio() {
 
   return (
     <div style={styles.page}>
-      {/* Main site background - continuous warm brown */}
-      <div style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundImage: `url(${IMAGES.mainBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: -1,
-      }} />
-
       {/* Candlelit Reveal Animation */}
       <CandlelitReveal />
 
@@ -162,11 +153,17 @@ export default function EmeryScottPortfolio() {
         startInVoiceOver={startInVoiceOver}
       />
 
-      {/* Key Aspects Section */}
-      <KeyAspectsSection />
-
-      {/* Reviews Section - NYT Style */}
-      <ReviewsSection />
+      {/* Key Aspects + Reviews Section - wrapped with main-bg-alt */}
+      <div style={{
+        backgroundImage: 'url(/images/Backdrops/main-bg-alt.png)',
+        backgroundSize: '100% auto',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#1a1210',
+      }}>
+        <KeyAspectsSection />
+        <ReviewsSection />
+      </div>
 
       {/* Contact Section */}
       <ContactSection />
@@ -178,31 +175,30 @@ export default function EmeryScottPortfolio() {
 }
 
 // ============================================
-// CANDLELIT REVEAL - Smooth center glow
+// CANDLELIT REVEAL - Dim to lit (fast)
 // ============================================
 function CandlelitReveal() {
   const [stage, setStage] = useState(0);
   
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStage(1), 100),
-      setTimeout(() => setStage(2), 800),
-      setTimeout(() => setStage(3), 1600),
-      setTimeout(() => setStage(4), 2400),
+      setTimeout(() => setStage(1), 50),
+      setTimeout(() => setStage(2), 400),
+      setTimeout(() => setStage(3), 900),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  if (stage === 4) return null;
+  if (stage === 3) return null;
 
   return (
     <div style={{
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#0a0908',
-      opacity: stage === 3 ? 0 : 1,
-      transition: 'opacity 0.8s ease',
+      background: 'rgba(10, 9, 8, 0.5)',
+      opacity: stage >= 2 ? 0 : 1,
+      transition: 'opacity 0.5s ease',
       pointerEvents: 'none',
     }}>
       <div style={{
@@ -210,11 +206,11 @@ function CandlelitReveal() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: stage >= 1 ? (stage >= 2 ? '300vmax' : '150px') : '0px',
-        height: stage >= 1 ? (stage >= 2 ? '300vmax' : '150px') : '0px',
+        width: stage >= 1 ? '300vmax' : '100px',
+        height: stage >= 1 ? '300vmax' : '100px',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(212,175,55,0.4) 0%, rgba(180,140,60,0.2) 30%, rgba(120,80,40,0.1) 60%, transparent 100%)',
-        transition: stage >= 2 ? 'all 1.2s cubic-bezier(0.4, 0, 0.2, 1)' : 'all 0.6s ease',
+        background: 'radial-gradient(circle, rgba(255,250,240,0.3) 0%, rgba(200,180,150,0.15) 30%, transparent 60%)',
+        transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
         opacity: stage >= 1 ? 1 : 0,
       }} />
     </div>
@@ -256,30 +252,36 @@ function HeroSection() {
 }
 
 // ============================================
-// QUOTE SECTION - Floating on main background
+// QUOTE SECTION - Parchment container
 // ============================================
 function QuoteSection() {
   return (
     <section style={{
       position: 'relative',
-      padding: '6rem 2rem',
+      padding: '5rem 2rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      background: 'transparent',
+      backgroundColor: '#1a1210',
     }}>
+      {/* Parchment card */}
       <div style={{
-        maxWidth: '700px',
+        maxWidth: '750px',
         textAlign: 'center',
-        padding: '3rem',
+        padding: '3.5rem 4rem',
+        backgroundColor: '#f5f0e6',
+        backgroundImage: `url(${IMAGES.creamBackdrop})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.2)',
       }}>
         <span style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: '4rem',
-          color: 'rgba(212, 175, 55, 0.4)',
+          color: 'rgba(139, 90, 90, 0.3)',
           display: 'block',
           lineHeight: 0.5,
-          marginBottom: '1rem',
+          marginBottom: '1.5rem',
         }}>"</span>
         <p style={{
           fontFamily: "'Playfair Display', Georgia, serif",
@@ -287,9 +289,8 @@ function QuoteSection() {
           fontWeight: 400,
           fontStyle: 'italic',
           lineHeight: 1.9,
-          color: '#e8dfd0',
+          color: '#3d3530',
           margin: 0,
-          textShadow: '0 2px 8px rgba(0,0,0,0.5)',
         }}>
           I have been with story. I have gone without. In only one of those states 
           did I feel I could truly live and so it lives always.
@@ -300,7 +301,7 @@ function QuoteSection() {
           fontSize: '0.9rem',
           fontWeight: 500,
           letterSpacing: '0.15em',
-          color: 'rgba(212, 175, 55, 0.7)',
+          color: '#5a4a40',
         }}>— E. Scott</p>
       </div>
     </section>
@@ -312,19 +313,56 @@ function QuoteSection() {
 // ============================================
 function AboutSection() {
   const [bioExpanded, setBioExpanded] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section style={styles.aboutSection}>
+    <section ref={sectionRef} style={styles.aboutSection}>
       <div style={styles.aboutLayout}>
         <div style={styles.aboutTextSide}>
-          <p style={styles.aboutLabel}>About</p>
-          <p style={styles.aboutOpening}>
+          <p style={{
+            ...styles.aboutLabel,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.6s ease',
+          }}>About</p>
+          <p style={{
+            ...styles.aboutOpening,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(25px)',
+            transition: 'all 0.6s ease 0.15s',
+          }}>
             As a lover of words, I ache to write too much. But I have decided to restrain myself. In brief...
           </p>
-          <h2 style={styles.aboutHeadline}>
+          <h2 style={{
+            ...styles.aboutHeadline,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(25px)',
+            transition: 'all 0.6s ease 0.3s',
+          }}>
             I am a <StorytellerWord />
           </h2>
-          <div style={styles.aboutSubsection}>
+          <div style={{
+            ...styles.aboutSubsection,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(25px)',
+            transition: 'all 0.6s ease 0.45s',
+          }}>
             <p style={styles.curiousText}>
               but are you not curious what I was going to write? You made it thus far
             </p>
@@ -369,7 +407,12 @@ function AboutSection() {
             </div>
           </div>
         </div>
-        <div style={styles.aboutPhotoSide}>
+        <div style={{
+          ...styles.aboutPhotoSide,
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.95)',
+          transition: 'all 0.8s ease 0.2s',
+        }}>
           <div style={styles.photoFrame}>
             <img src={IMAGES.aboutPhoto} alt="Emery" style={styles.aboutPhoto} />
           </div>
@@ -446,8 +489,8 @@ function KeyAspectsSection() {
           width: '60px',
           height: '60px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, rgba(180, 150, 120, 0.3), rgba(120, 90, 60, 0.3))',
-          border: '2px solid rgba(180, 150, 120, 0.4)',
+          background: 'linear-gradient(135deg, rgba(160, 150, 160, 0.3), rgba(120, 90, 60, 0.3))',
+          border: '2px solid rgba(160, 150, 160, 0.4)',
           overflow: 'hidden',
         }}>
           <img 
@@ -468,12 +511,12 @@ function KeyAspectsSection() {
           <p style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: '0.85rem',
-            color: 'rgba(180, 150, 120, 0.7)',
+            color: 'rgba(160, 150, 160, 0.7)',
             margin: 0,
             textShadow: '0 1px 3px rgba(0,0,0,0.4)',
           }}>
             <a href="https://www.instagram.com/emery_.s/?hl=en" target="_blank" rel="noopener noreferrer" style={{
-              color: 'rgba(212, 175, 55, 0.8)',
+              color: 'rgba(180, 145, 155, 0.8)',
               textDecoration: 'none',
             }}>@emery_.s</a>
           </p>
@@ -489,7 +532,7 @@ function KeyAspectsSection() {
         <p style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: '0.85rem',
-          color: 'rgba(180, 150, 120, 0.8)',
+          color: 'rgba(160, 150, 160, 0.8)',
           letterSpacing: '0.2em',
           marginBottom: '1rem',
           textShadow: '0 1px 3px rgba(0,0,0,0.4)',
@@ -514,7 +557,7 @@ function KeyAspectsSection() {
         maxWidth: '1200px',
         margin: '0 auto 3rem auto',
         height: '1px',
-        background: 'linear-gradient(90deg, transparent, rgba(180, 150, 120, 0.3), transparent)',
+        background: 'linear-gradient(90deg, transparent, rgba(160, 150, 160, 0.3), transparent)',
       }} />
 
       {/* Content grid */}
@@ -536,7 +579,7 @@ function KeyAspectsSection() {
           <div style={{
             aspectRatio: '3/4.5',
             background: 'rgba(60, 50, 40, 0.5)',
-            border: '1px solid rgba(180, 150, 120, 0.2)',
+            border: '1px solid rgba(160, 150, 160, 0.2)',
             overflow: 'hidden',
             maxHeight: '600px',
           }}>
@@ -571,14 +614,14 @@ function KeyAspectsSection() {
             }}>{aspect.title}</h3>
             <div style={{
               height: '1px',
-              background: 'rgba(180, 150, 120, 0.3)',
+              background: 'rgba(160, 150, 160, 0.3)',
               margin: '1rem 0',
             }} />
             <p style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: '0.95rem',
               fontStyle: 'italic',
-              color: 'rgba(180, 150, 120, 0.8)',
+              color: 'rgba(160, 150, 160, 0.8)',
               margin: '0 0 1rem 0',
               textShadow: '0 1px 3px rgba(0,0,0,0.4)',
             }}>{aspect.subtitle}</p>
@@ -599,7 +642,7 @@ function KeyAspectsSection() {
         maxWidth: '1200px',
         margin: '4rem auto 0 auto',
         height: '1px',
-        background: 'linear-gradient(90deg, transparent, rgba(180, 150, 120, 0.3), transparent)',
+        background: 'linear-gradient(90deg, transparent, rgba(160, 150, 160, 0.3), transparent)',
       }} />
     </section>
   );
@@ -745,7 +788,7 @@ function ContactSection() {
           <div style={{
             aspectRatio: '4/5',
             background: 'rgba(60, 50, 40, 0.3)',
-            border: '1px solid rgba(180, 150, 120, 0.2)',
+            border: '1px solid rgba(160, 150, 160, 0.2)',
             overflow: 'hidden',
           }}>
             <img 
@@ -892,7 +935,7 @@ function FooterSection() {
             margin: '0 0 0.5rem 0',
             lineHeight: 1.4,
           }}>
-            Hire Me for Your <span style={{ color: 'rgba(180, 150, 120, 0.9)' }}>Creative</span> Project
+            Hire Me for Your <span style={{ color: 'rgba(160, 150, 160, 0.9)' }}>Creative</span> Project
           </h3>
         </div>
 
@@ -910,7 +953,7 @@ function FooterSection() {
             textDecoration: 'none',
             transition: 'color 0.3s ease',
           }}>INSTAGRAM</a>
-          <span style={{ color: 'rgba(180, 150, 120, 0.3)' }}>·</span>
+          <span style={{ color: 'rgba(160, 150, 160, 0.3)' }}>·</span>
           <a href="https://www.youtube.com/@EmeryGScott" target="_blank" rel="noopener noreferrer" style={{
             color: 'rgba(232, 223, 208, 0.6)',
             fontSize: '0.8rem',
@@ -919,7 +962,7 @@ function FooterSection() {
             textDecoration: 'none',
             transition: 'color 0.3s ease',
           }}>YOUTUBE</a>
-          <span style={{ color: 'rgba(180, 150, 120, 0.3)' }}>·</span>
+          <span style={{ color: 'rgba(160, 150, 160, 0.3)' }}>·</span>
           <a href="https://www.facebook.com/emeryscott" target="_blank" rel="noopener noreferrer" style={{
             color: 'rgba(232, 223, 208, 0.6)',
             fontSize: '0.8rem',
@@ -934,14 +977,14 @@ function FooterSection() {
         <div style={{
           width: '60px',
           height: '1px',
-          background: 'rgba(180, 150, 120, 0.2)',
+          background: 'rgba(160, 150, 160, 0.2)',
         }} />
 
         {/* Copyright */}
         <p style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: '0.8rem',
-          color: 'rgba(180, 150, 120, 0.35)',
+          color: 'rgba(160, 150, 160, 0.35)',
           margin: 0,
           letterSpacing: '0.1em',
         }}>
@@ -979,8 +1022,9 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/acting-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: '100% auto',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
         opacity: showActingBg ? 1 : 0,
         zIndex: 1,
         transition: 'opacity 0.8s ease',
@@ -990,8 +1034,9 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/voiceover-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: '100% auto',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
         opacity: showVoiceOverBg ? 1 : 0,
         zIndex: 2,
         transition: 'opacity 0.8s ease',
@@ -1001,19 +1046,21 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/modeling-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: '100% auto',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
         opacity: showModelingBg ? 1 : 0,
         zIndex: 1,
         transition: 'opacity 0.8s ease',
       }} />
       
-      {/* Writing: Warm parchment with script */}
+      {/* Writing: Warm parchment with script - square image */}
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/writing-bg.png)',
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         opacity: showWritingBg ? 1 : 0,
         zIndex: 1,
         transition: 'opacity 0.8s ease',
@@ -1347,8 +1394,8 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   <h2 style={{
                     ...styles.paneTitle,
                     textShadow: reelsHovered 
-                      ? '0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2)' 
-                      : '0 0 15px rgba(212, 175, 55, 0.2)',
+                      ? '0 0 30px rgba(180, 145, 155, 0.5), 0 0 60px rgba(180, 145, 155, 0.2)' 
+                      : '0 0 15px rgba(180, 145, 155, 0.2)',
                   }}>
                     Reels
                   </h2>
@@ -1375,8 +1422,8 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   <h2 style={{
                     ...styles.paneTitle,
                     textShadow: galleriesHovered 
-                      ? '0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2)' 
-                      : '0 0 15px rgba(212, 175, 55, 0.2)',
+                      ? '0 0 30px rgba(180, 145, 155, 0.5), 0 0 60px rgba(180, 145, 155, 0.2)' 
+                      : '0 0 15px rgba(180, 145, 155, 0.2)',
                   }}>
                     Galleries
                   </h2>
@@ -1615,7 +1662,7 @@ function VoiceOverView() {
             style={{
               width: '2px',
               height: `${8 + Math.sin(i * 0.5) * 35 + i * 2}px`,
-              background: `linear-gradient(180deg, transparent, rgba(212, 175, 55, ${0.3 + i * 0.03}), transparent)`,
+              background: `linear-gradient(180deg, transparent, rgba(180, 145, 155, ${0.3 + i * 0.03}), transparent)`,
               borderRadius: '2px',
               opacity: appeared ? (isPlaying ? 0.8 : 0.3) : 0,
               transition: `opacity 0.5s ease ${i * 0.05}s, height 0.3s ease`,
@@ -1644,7 +1691,7 @@ function VoiceOverView() {
             style={{
               width: '2px',
               height: `${8 + Math.sin(i * 0.5) * 35 + i * 2}px`,
-              background: `linear-gradient(180deg, transparent, rgba(212, 175, 55, ${0.3 + i * 0.03}), transparent)`,
+              background: `linear-gradient(180deg, transparent, rgba(180, 145, 155, ${0.3 + i * 0.03}), transparent)`,
               borderRadius: '2px',
               opacity: appeared ? (isPlaying ? 0.8 : 0.3) : 0,
               transition: `opacity 0.5s ease ${i * 0.05}s, height 0.3s ease`,
@@ -1663,7 +1710,7 @@ function VoiceOverView() {
             width: '150px',
             height: '150px',
             borderRadius: '50%',
-            border: '1px solid rgba(212, 175, 55, 0.3)',
+            border: '1px solid rgba(180, 145, 155, 0.3)',
             animation: 'rippleOut 2s ease-out infinite',
           }} />
           <div style={{
@@ -1671,7 +1718,7 @@ function VoiceOverView() {
             width: '150px',
             height: '150px',
             borderRadius: '50%',
-            border: '1px solid rgba(212, 175, 55, 0.3)',
+            border: '1px solid rgba(180, 145, 155, 0.3)',
             animation: 'rippleOut 2s ease-out infinite 0.5s',
           }} />
           <div style={{
@@ -1679,7 +1726,7 @@ function VoiceOverView() {
             width: '150px',
             height: '150px',
             borderRadius: '50%',
-            border: '1px solid rgba(212, 175, 55, 0.3)',
+            border: '1px solid rgba(180, 145, 155, 0.3)',
             animation: 'rippleOut 2s ease-out infinite 1s',
           }} />
         </>
@@ -1708,7 +1755,7 @@ function VoiceOverView() {
           fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
           fontWeight: 500,
           fontStyle: 'italic',
-          color: 'rgba(212, 175, 55, 0.7)',
+          color: 'rgba(180, 145, 155, 0.7)',
           letterSpacing: '0.15em',
           marginBottom: '3rem',
         }}>
@@ -1722,8 +1769,8 @@ function VoiceOverView() {
             width: '100px',
             height: '100px',
             borderRadius: '50%',
-            background: 'rgba(212, 175, 55, 0.1)',
-            border: '1px solid rgba(212, 175, 55, 0.3)',
+            background: 'rgba(180, 145, 155, 0.1)',
+            border: '1px solid rgba(180, 145, 155, 0.3)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
@@ -1732,23 +1779,23 @@ function VoiceOverView() {
             transition: 'all 0.4s ease',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(212, 175, 55, 0.2)';
+            e.currentTarget.style.background = 'rgba(180, 145, 155, 0.2)';
             e.currentTarget.style.transform = 'scale(1.05)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(212, 175, 55, 0.1)';
+            e.currentTarget.style.background = 'rgba(180, 145, 155, 0.1)';
             e.currentTarget.style.transform = 'scale(1)';
           }}
         >
           {isPlaying ? (
             // Pause icon
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(212, 175, 55, 0.8)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(180, 145, 155, 0.8)">
               <rect x="6" y="4" width="4" height="16" />
               <rect x="14" y="4" width="4" height="16" />
             </svg>
           ) : (
             // Play icon
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(212, 175, 55, 0.8)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="rgba(180, 145, 155, 0.8)">
               <polygon points="8,5 20,12 8,19" />
             </svg>
           )}
@@ -1758,7 +1805,7 @@ function VoiceOverView() {
         <p style={{
           fontFamily: "'Cormorant Garamond', Georgia, serif",
           fontSize: '0.9rem',
-          color: 'rgba(180, 150, 120, 0.5)',
+          color: 'rgba(160, 150, 160, 0.5)',
           fontStyle: 'italic',
           letterSpacing: '0.1em',
           marginTop: '2rem',
@@ -2019,16 +2066,12 @@ function EditorialGallery({ accent }) {
 // ============================================
 function WritingWingContent({ transitioning, onBack }) {
   const [appeared, setAppeared] = useState(false);
-  const [expandedStory, setExpandedStory] = useState(null);
+  const [selectedStory, setSelectedStory] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setAppeared(true), 50);
     return () => clearTimeout(timer);
   }, []);
-
-  const toggleStory = (id) => {
-    setExpandedStory(expandedStory === id ? null : id);
-  };
 
   const stories = [
     {
@@ -2052,7 +2095,7 @@ She took the star. It was heavier than she expected—heavy as grief, as love, a
     },
     {
       id: 1,
-      title: "The Garden at the End of the Road",
+      title: "The Garden at the End",
       content: `There is a garden that exists only when you've given up looking for it.
 
 Marguerite found it on a Tuesday, after the funeral, after the lawyers, after everyone had stopped bringing casseroles. She'd been walking—just walking, no destination, no purpose—when the road ended at a gate she'd never seen before.
@@ -2111,177 +2154,147 @@ Some journeys, the river knew, only end so that others can begin.`
     }
   ];
 
-  const hasExpanded = expandedStory !== null;
-
   return (
     <div style={{
       ...styles.wingContent,
       opacity: transitioning ? 0 : 1,
       background: 'transparent',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem',
     }}>
-      {/* Floating fireflies - magical dust motes */}
-      {[...Array(25)].map((_, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            width: `${3 + Math.random() * 5}px`,
-            height: `${3 + Math.random() * 5}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            background: 'radial-gradient(circle, rgba(200, 160, 80, 0.95) 0%, rgba(180, 140, 60, 0.5) 40%, transparent 70%)',
-            borderRadius: '50%',
-            boxShadow: `0 0 ${8 + Math.random() * 12}px rgba(200, 160, 80, 0.6)`,
-            animation: `fireflyFloat ${6 + Math.random() * 8}s ease-in-out infinite`,
-            animationDelay: `${Math.random() * 5}s`,
-            pointerEvents: 'none',
-            zIndex: 1,
-          }}
-        />
-      ))}
-
-      {/* HEADER - fades when story expanded */}
+      {/* Fixed square container with internal scroll */}
       <div style={{
-        ...styles.headerLine,
-        opacity: hasExpanded ? 0.3 : 1,
-        transition: 'opacity 0.6s ease',
-      }}>
-        <button style={{
-          ...styles.headerBackButton,
-          borderColor: 'rgba(120, 90, 50, 0.4)',
-          color: 'rgba(90, 65, 35, 0.9)',
-        }} onClick={onBack}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <h1 style={{
-          ...styles.headerTitle,
-          opacity: appeared ? 1 : 0,
-          color: 'rgba(70, 50, 30, 0.85)',
-          textShadow: '0 1px 3px rgba(255, 255, 255, 0.4)',
-        }}>
-          WRITING
-        </h1>
-        <div style={{ width: '40px' }} />
-      </div>
-
-      {/* CONTENT */}
-      <div style={{
-        ...styles.contentArea,
-        overflowY: 'auto',
-        padding: hasExpanded ? '1rem 2rem' : '3rem 2rem',
+        width: 'min(90vw, 90vh)',
+        height: 'min(90vw, 90vh)',
+        maxWidth: '800px',
+        maxHeight: '800px',
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: hasExpanded ? 'center' : 'flex-start',
-        maxWidth: '900px',
-        margin: '0 auto',
-        position: 'relative',
-        zIndex: 2,
-        transition: 'all 0.6s ease',
       }}>
-        {stories.map((story, index) => {
-          const isExpanded = expandedStory === story.id;
-          const isOther = hasExpanded && !isExpanded;
-          
-          return (
-            <div
-              key={story.id}
-              style={{
-                width: '100%',
-                marginBottom: isExpanded ? '0' : isOther ? '0.25rem' : '0.5rem',
-                opacity: appeared ? 1 : 0,
-                transform: appeared ? 'translateX(0)' : 'translateX(-20px)',
-                transition: `all 0.6s ease ${index * 0.1}s`,
-                order: isExpanded ? -1 : index,
-              }}
-            >
-              {/* Title - clickable */}
+        {/* HEADER inside square */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '1.5rem 2rem',
+          flexShrink: 0,
+        }}>
+          <button style={{
+            ...styles.headerBackButton,
+            borderColor: 'rgba(80, 60, 40, 0.4)',
+            color: 'rgba(70, 50, 35, 0.9)',
+          }} onClick={onBack}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h1 style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: 'clamp(1rem, 2vw, 1.3rem)',
+            fontWeight: 400,
+            letterSpacing: '0.3em',
+            color: 'rgba(60, 45, 30, 0.9)',
+            opacity: appeared ? 1 : 0,
+            transition: 'opacity 0.6s ease',
+          }}>
+            WRITING
+          </h1>
+          <div style={{ width: '40px' }} />
+        </div>
+
+        {/* Content area - scrollable */}
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          overflow: 'hidden',
+          padding: '0 2rem 2rem',
+          gap: '1.5rem',
+        }}>
+          {/* LEFT - Story titles */}
+          <div style={{
+            width: '200px',
+            flexShrink: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+            overflowY: 'auto',
+          }}>
+            {stories.map((story, index) => (
               <div
-                onClick={() => toggleStory(story.id)}
+                key={story.id}
+                onClick={() => setSelectedStory(story.id)}
                 style={{
+                  padding: '0.75rem 1rem',
                   cursor: 'pointer',
-                  padding: isOther ? '0.3rem 0' : '1rem 0',
-                  borderBottom: isExpanded ? 'none' : isOther ? 'none' : '1px solid rgba(140, 100, 60, 0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  transition: 'all 0.5s ease',
-                  justifyContent: isExpanded ? 'center' : 'flex-start',
+                  borderLeft: selectedStory === story.id 
+                    ? '2px solid rgba(120, 90, 60, 0.8)' 
+                    : '2px solid transparent',
+                  background: selectedStory === story.id 
+                    ? 'rgba(255, 250, 240, 0.15)' 
+                    : 'transparent',
+                  transition: 'all 0.3s ease',
+                  opacity: appeared ? 1 : 0,
+                  transform: appeared ? 'translateX(0)' : 'translateX(-10px)',
+                  transitionDelay: `${index * 0.1}s`,
                 }}
               >
                 <span style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: isExpanded 
-                    ? 'clamp(1.6rem, 4vw, 2.4rem)' 
-                    : isOther 
-                      ? '0.7rem' 
-                      : 'clamp(1.1rem, 2.5vw, 1.5rem)',
-                  fontStyle: 'italic',
-                  fontWeight: isExpanded ? 400 : 400,
-                  color: isExpanded 
-                    ? 'rgba(70, 50, 30, 0.95)' 
-                    : isOther 
-                      ? 'rgba(140, 110, 70, 0.4)' 
-                      : 'rgba(80, 55, 35, 0.85)',
-                  letterSpacing: isExpanded ? '0.08em' : '0.02em',
-                  transition: 'all 0.5s ease',
-                  textAlign: isExpanded ? 'center' : 'left',
+                  fontSize: selectedStory === story.id ? '0.95rem' : '0.85rem',
+                  color: selectedStory === story.id 
+                    ? 'rgba(50, 35, 25, 0.95)' 
+                    : 'rgba(80, 60, 45, 0.7)',
+                  transition: 'all 0.3s ease',
+                  display: 'block',
+                  lineHeight: 1.4,
                 }}>
                   {story.title}
                 </span>
-                {!isExpanded && !isOther && (
-                  <span style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '1.2rem',
-                    color: 'rgba(160, 120, 70, 0.6)',
-                    transition: 'all 0.3s ease',
-                  }}>
-                    →
-                  </span>
-                )}
               </div>
+            ))}
+          </div>
 
-              {/* Story content - expands to take over */}
-              <div style={{
-                maxHeight: isExpanded ? '70vh' : '0',
-                overflow: isExpanded ? 'auto' : 'hidden',
-                transition: 'max-height 0.6s ease',
-              }}>
-                <div style={{
-                  padding: '3rem 0 2rem 0',
-                  maxWidth: '700px',
-                  margin: '0 auto',
+          {/* RIGHT - Story content (scrollable) */}
+          <div style={{
+            flex: 1,
+            overflowY: 'auto',
+            paddingRight: '1rem',
+            borderLeft: '1px solid rgba(120, 90, 60, 0.2)',
+            paddingLeft: '1.5rem',
+          }}>
+            <h2 style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+              fontWeight: 400,
+              color: 'rgba(50, 35, 25, 0.95)',
+              marginBottom: '1.5rem',
+              paddingBottom: '0.75rem',
+              borderBottom: '1px solid rgba(120, 90, 60, 0.2)',
+            }}>
+              {stories[selectedStory].title}
+            </h2>
+            
+            <div style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '1rem',
+              lineHeight: 1.9,
+              color: 'rgba(40, 30, 20, 0.85)',
+            }}>
+              {stories[selectedStory].content.split('\n\n').map((paragraph, pIndex) => (
+                <p key={pIndex} style={{
+                  marginBottom: '1.25rem',
+                  textIndent: pIndex > 0 ? '1.5rem' : '0',
                 }}>
-                  {story.content.split('\n\n').map((paragraph, pIndex) => (
-                    <p key={pIndex} style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
-                      fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
-                      lineHeight: 2.1,
-                      color: 'rgba(55, 40, 25, 0.92)',
-                      marginBottom: '1.8rem',
-                      textIndent: pIndex === 0 ? '0' : '3rem',
-                      textAlign: 'justify',
-                    }}>
-                      {paragraph}
-                    </p>
-                  ))}
-                  <div style={{
-                    textAlign: 'center',
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '1rem',
-                    color: 'rgba(140, 100, 60, 0.4)',
-                    fontStyle: 'italic',
-                    marginTop: '3rem',
-                    letterSpacing: '0.3em',
-                  }}>
-                    ✦
-                  </div>
-                </div>
-              </div>
+                  {paragraph}
+                </p>
+              ))}
             </div>
-          );
-        })}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -2319,11 +2332,15 @@ function StorytellerWord() {
           display: 'inline-block',
           fontSize: '1.15em',
           fontWeight: 600,
-          color: '#3d3530',
+          color: '#e8dfd0',
           cursor: 'default',
-          transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-          transform: hovered ? 'translateZ(80px) scale(1.06)' : 'translateZ(0) scale(1)',
-          textShadow: hovered ? '0 6px 40px rgba(139, 90, 60, 0.4)' : '0 2px 10px rgba(139, 115, 85, 0.15)',
+          transition: 'all 1.2s cubic-bezier(0.23, 1, 0.32, 1)',
+          transform: hovered 
+            ? 'translateZ(60px) translateY(-8px) rotate(-1deg)' 
+            : 'translateZ(0) translateY(0) rotate(0deg)',
+          textShadow: hovered 
+            ? '0 12px 30px rgba(0, 0, 0, 0.3)' 
+            : '0 2px 8px rgba(0, 0, 0, 0.2)',
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -2535,6 +2552,11 @@ const styles = {
     position: 'relative',
     zIndex: 10,
     padding: '8vh 6vw 12vh',
+    backgroundImage: `url(/images/Backdrops/main-bg.png)`,
+    backgroundSize: '100% auto',
+    backgroundPosition: 'top center',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: '#1a1210',
   },
   aboutLayout: {
     display: 'flex',
@@ -2552,7 +2574,7 @@ const styles = {
     fontWeight: 600,
     letterSpacing: '0.35em',
     textTransform: 'uppercase',
-    color: 'rgba(212, 175, 55, 0.8)',
+    color: 'rgba(180, 145, 155, 0.8)',
     marginBottom: '2rem',
     textShadow: '0 1px 3px rgba(0,0,0,0.4)',
   },
@@ -2570,10 +2592,9 @@ const styles = {
   },
   aboutOpening: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.1rem',
+    fontSize: '1.05rem',
     fontWeight: 400,
-    fontStyle: 'italic',
-    lineHeight: 1.9,
+    lineHeight: 1.8,
     color: 'rgba(232, 223, 208, 0.8)',
     marginBottom: '1.5rem',
     textShadow: '0 1px 3px rgba(0,0,0,0.3)',
@@ -2581,7 +2602,7 @@ const styles = {
   aboutHeadline: {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: 'clamp(1.5rem, 2.8vw, 2rem)',
-    fontWeight: 500,
+    fontWeight: 400,
     lineHeight: 1.5,
     color: '#e8dfd0',
     margin: 0,
@@ -2592,20 +2613,19 @@ const styles = {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '1rem',
     fontWeight: 400,
-    fontStyle: 'italic',
-    lineHeight: 1.8,
-    color: 'rgba(180, 150, 120, 0.85)',
+    lineHeight: 1.7,
+    color: 'rgba(200, 190, 195, 0.8)',
     textShadow: '0 1px 3px rgba(0,0,0,0.3)',
   },
   clickReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.05rem',
-    fontWeight: 500,
-    color: 'rgba(212, 175, 55, 0.8)',
+    fontSize: '1rem',
+    fontWeight: 400,
+    color: 'rgba(220, 210, 215, 0.85)',
     marginTop: '1.2rem',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: 'rgba(212, 175, 55, 0.5)',
+    textDecorationColor: 'rgba(200, 190, 195, 0.4)',
     textUnderlineOffset: '4px',
   },
   bioExpanded: {
@@ -2614,26 +2634,26 @@ const styles = {
   },
   bioContent: {
     paddingTop: '1.2rem',
-    borderTop: '1px solid rgba(180, 150, 120, 0.3)',
+    borderTop: '1px solid rgba(160, 150, 160, 0.3)',
   },
   bioParagraph: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '1rem',
     fontWeight: 400,
-    lineHeight: 1.9,
-    color: 'rgba(232, 223, 208, 0.8)',
+    lineHeight: 1.7,
+    color: 'rgba(232, 223, 208, 0.75)',
     marginBottom: '1.2rem',
-    textShadow: '0 1px 3px rgba(0,0,0,0.3)',
+    textShadow: '0 1px 3px rgba(0,0,0,0.35)',
   },
   closeReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.05rem',
-    fontWeight: 500,
-    color: 'rgba(212, 175, 55, 0.8)',
+    fontSize: '1rem',
+    fontWeight: 400,
+    color: 'rgba(220, 210, 215, 0.85)',
     marginTop: '1.5rem',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: 'rgba(212, 175, 55, 0.5)',
+    textDecorationColor: 'rgba(200, 190, 195, 0.4)',
     textUnderlineOffset: '4px',
   },
 
@@ -2651,6 +2671,8 @@ const styles = {
     paddingRight: '5vw',
     zIndex: 10,
     overflow: 'hidden',
+    backgroundColor: '#1a2f2a',
+    background: 'radial-gradient(ellipse at center, #2a3f3a 0%, #1a2f2a 50%, #0f1f1a 100%)',
   },
   rotundaBackground: {
     position: 'absolute',
@@ -2685,7 +2707,7 @@ const styles = {
     fontWeight: 500,
     letterSpacing: '0.5em',
     textTransform: 'uppercase',
-    color: '#8b7d6b',
+    color: 'rgba(232, 223, 208, 0.6)',
     marginBottom: '1.5rem',
     zIndex: 2,
     transition: 'opacity 0.3s ease',
@@ -2795,7 +2817,7 @@ const styles = {
   headerBackButton: {
     background: 'transparent',
     // Subtle gold tint on border
-    border: '1px solid rgba(212, 175, 55, 0.2)',
+    border: '1px solid rgba(180, 145, 155, 0.2)',
     borderRadius: '50%',
     width: '40px',
     height: '40px',
@@ -2815,7 +2837,7 @@ const styles = {
     transition: 'opacity 0.4s ease',
     textAlign: 'center',
     // Subtle gold highlight
-    textShadow: '0 0 30px rgba(212, 175, 55, 0.15)',
+    textShadow: '0 0 30px rgba(180, 145, 155, 0.15)',
   },
   headerSpacer: {
     width: '40px',
@@ -2893,7 +2915,7 @@ const styles = {
     height: '70%',
     width: '1px',
     // Gold accent
-    background: 'linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.25), transparent)',
+    background: 'linear-gradient(to bottom, transparent, rgba(180, 145, 155, 0.25), transparent)',
     zIndex: 20,
     transition: 'opacity 0.5s ease',
   },
@@ -2987,12 +3009,12 @@ const styles = {
     color: 'rgba(244, 239, 228, 0.8)',
     margin: 0,
     // Subtle gold accent
-    textShadow: '0 0 20px rgba(212, 175, 55, 0.1)',
+    textShadow: '0 0 20px rgba(180, 145, 155, 0.1)',
   },
   galleryCardRole: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '0.8rem',
-    color: 'rgba(212, 175, 55, 0.5)',
+    color: 'rgba(180, 145, 155, 0.5)',
     fontStyle: 'italic',
     margin: '0.3rem 0 0',
   },
@@ -3013,7 +3035,7 @@ const styles = {
     width: '180px',
     height: '60px',
     // Gold-tinted glow
-    background: 'radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, transparent 70%)',
+    background: 'radial-gradient(ellipse at center, rgba(180, 145, 155, 0.15) 0%, transparent 70%)',
     transition: 'opacity 0.4s ease',
     pointerEvents: 'none',
   },
@@ -3024,7 +3046,7 @@ const styles = {
     fontWeight: 400,
     fontStyle: 'italic',
     // Muted with hint of gold
-    color: 'rgba(212, 175, 55, 0.6)',
+    color: 'rgba(180, 145, 155, 0.6)',
     margin: 0,
     transition: 'all 0.4s ease',
   },
@@ -3033,7 +3055,7 @@ const styles = {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '1.1rem',
     // Gold accent
-    color: 'rgba(212, 175, 55, 0.5)',
+    color: 'rgba(180, 145, 155, 0.5)',
     marginTop: '0.3rem',
     transition: 'all 0.4s ease',
   },
@@ -3047,7 +3069,7 @@ const styles = {
     letterSpacing: '0.15em',
     color: '#f4efe4',
     // Default gold highlight
-    textShadow: '0 0 15px rgba(212, 175, 55, 0.2)',
+    textShadow: '0 0 15px rgba(180, 145, 155, 0.2)',
     transition: 'text-shadow 0.4s ease',
   },
 
