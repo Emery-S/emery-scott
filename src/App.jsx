@@ -1045,9 +1045,8 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
   const showWritingBg = activeWing === 'writing';
   
   return (
-    <section ref={ref} style={{
+    <section ref={ref} className="rotunda-section" style={{
       ...styles.rotunda,
-      minHeight: activeWing ? '100vh' : '90vh',
       paddingTop: activeWing ? '2vh' : '8vh',
       paddingBottom: activeWing ? '2vh' : '4vh',
     }}>
@@ -1673,7 +1672,7 @@ function VoiceOverView() {
     <div style={{
       width: '95%',
       maxWidth: '1100px',
-      minHeight: '65vh',
+      minHeight: '70vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -2601,10 +2600,10 @@ const styles = {
     textUnderlineOffset: '4px',
   },
 
-  // Rotunda - ADJUSTED SPACING
+  // Rotunda - FULL HEIGHT
   rotunda: {
     position: 'relative',
-    minHeight: '90vh',
+    minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -2781,12 +2780,13 @@ const styles = {
     transition: 'transform 0.5s cubic-bezier(0.55, 0, 1, 0.45), opacity 0.3s ease',
   },
 
-  // Glass panes - same size as expanded Reels/Galleries content
+  // Glass panes - same size as expanded Reels/Galleries content - RESPONSIVE
   glassContainer: {
     position: 'relative',
     width: '90%',
     maxWidth: '1200px',
-    height: '65vh',
+    height: '70vh',
+    minHeight: '500px',
     display: 'flex',
     overflow: 'hidden',
   },
@@ -2839,10 +2839,10 @@ const styles = {
   glassFrost: {
     position: 'absolute',
     top: 0, left: 0, width: '100%', height: '100%',
-    // Frosted glass effect - semi-transparent with blur AND visible tint
-    background: 'rgba(50, 35, 35, 0.75)',
-    backdropFilter: 'blur(20px) saturate(180%) brightness(1.1)',
-    WebkitBackdropFilter: 'blur(20px) saturate(180%) brightness(1.1)',
+    // Frosted glass effect - semi-transparent with blur
+    background: 'rgba(40, 30, 30, 0.45)',
+    backdropFilter: 'blur(10px) saturate(150%)',
+    WebkitBackdropFilter: 'blur(10px) saturate(150%)',
     pointerEvents: 'none',
     zIndex: 1,
   },
@@ -3199,6 +3199,22 @@ if (typeof document !== 'undefined') {
       -ms-overflow-style: auto;
       scrollbar-width: thin;
       scrollbar-color: rgba(100, 80, 90, 0.4) rgba(60, 50, 55, 0.1);
+    }
+    
+    /* Mobile responsive adjustments */
+    @media (max-width: 768px) {
+      /* Ensure rotunda stays full height on mobile */
+      .rotunda-section {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+      }
+    }
+    
+    @media (max-height: 600px) and (orientation: landscape) {
+      /* Handle landscape mobile better */
+      .rotunda-section {
+        min-height: 100vh;
+      }
     }
   `;
   document.head.appendChild(style);
