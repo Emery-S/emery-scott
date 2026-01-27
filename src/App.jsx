@@ -696,7 +696,7 @@ function ReviewsSection() {
   return (
     <section style={{
       background: 'transparent',
-      padding: '1rem 0 3rem 0',
+      padding: '0 0 3rem 0',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -1045,7 +1045,12 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
   const showWritingBg = activeWing === 'writing';
   
   return (
-    <section ref={ref} style={styles.rotunda}>
+    <section ref={ref} style={{
+      ...styles.rotunda,
+      minHeight: activeWing ? '100vh' : '90vh',
+      paddingTop: activeWing ? '2vh' : '8vh',
+      paddingBottom: activeWing ? '2vh' : '4vh',
+    }}>
       {/* LAYERED BACKGROUNDS - wing overlays only */}
       
       {/* Acting: Rich theatrical brocade */}
@@ -1408,8 +1413,6 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
               <div style={{
                 ...styles.glassOverlayContainer,
                 pointerEvents: glassOpen ? 'none' : 'auto',
-                opacity: 1,
-                willChange: glassOpen ? 'none' : 'auto',
               }}>
                 {/* REELS glass pane - FROSTED */}
                 <div 
@@ -1417,7 +1420,6 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                     ...styles.glassPane,
                     transform: glassOpen ? 'translateX(-100%)' : 'translateX(0)',
                     opacity: glassOpen ? 0 : 1,
-                    willChange: 'transform, opacity',
                   }}
                   onMouseEnter={() => setReelsHovered(true)}
                   onMouseLeave={() => setReelsHovered(false)}
@@ -1446,7 +1448,6 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                     ...styles.glassPane,
                     transform: glassOpen ? 'translateX(100%)' : 'translateX(0)',
                     opacity: glassOpen ? 0 : 1,
-                    willChange: 'transform, opacity',
                   }}
                   onMouseEnter={() => setGalleriesHovered(true)}
                   onMouseLeave={() => setGalleriesHovered(false)}
@@ -1672,7 +1673,7 @@ function VoiceOverView() {
     <div style={{
       width: '95%',
       maxWidth: '1100px',
-      minHeight: '55vh',
+      minHeight: '65vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -2535,7 +2536,7 @@ const styles = {
   },
   aboutOpening: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.05rem',
+    fontSize: '1.2rem',
     fontWeight: 400,
     lineHeight: 1.8,
     color: 'rgba(232, 223, 208, 0.8)',
@@ -2544,7 +2545,7 @@ const styles = {
   },
   aboutHeadline: {
     fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.5rem, 2.8vw, 2rem)',
+    fontSize: 'clamp(1.8rem, 3.2vw, 2.5rem)',
     fontWeight: 400,
     lineHeight: 1.5,
     color: '#e8dfd0',
@@ -2554,7 +2555,7 @@ const styles = {
   aboutSubsection: { marginTop: '2rem' },
   curiousText: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1rem',
+    fontSize: '1.15rem',
     fontWeight: 400,
     lineHeight: 1.7,
     color: 'rgba(200, 190, 195, 0.8)',
@@ -2562,7 +2563,7 @@ const styles = {
   },
   clickReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1rem',
+    fontSize: '1.15rem',
     fontWeight: 400,
     color: 'rgba(220, 210, 215, 0.85)',
     marginTop: '1.2rem',
@@ -2581,7 +2582,7 @@ const styles = {
   },
   bioParagraph: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1rem',
+    fontSize: '1.15rem',
     fontWeight: 400,
     lineHeight: 1.7,
     color: 'rgba(232, 223, 208, 0.75)',
@@ -2590,7 +2591,7 @@ const styles = {
   },
   closeReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1rem',
+    fontSize: '1.15rem',
     fontWeight: 400,
     color: 'rgba(220, 210, 215, 0.85)',
     marginTop: '1.5rem',
@@ -2785,7 +2786,7 @@ const styles = {
     position: 'relative',
     width: '90%',
     maxWidth: '1200px',
-    height: '55vh',
+    height: '65vh',
     display: 'flex',
     overflow: 'hidden',
   },
@@ -2838,10 +2839,12 @@ const styles = {
   glassFrost: {
     position: 'absolute',
     top: 0, left: 0, width: '100%', height: '100%',
-    // Frosted glass effect - semi-transparent with blur
-    background: 'rgba(40, 25, 25, 0.3)',
-    backdropFilter: 'blur(8px)',
-    WebkitBackdropFilter: 'blur(8px)',
+    // Frosted glass effect - semi-transparent with blur AND visible tint
+    background: 'rgba(50, 35, 35, 0.75)',
+    backdropFilter: 'blur(20px) saturate(180%) brightness(1.1)',
+    WebkitBackdropFilter: 'blur(20px) saturate(180%) brightness(1.1)',
+    pointerEvents: 'none',
+    zIndex: 1,
   },
   
   // REAL CONTENT styles - Reels bars and Gallery cards
