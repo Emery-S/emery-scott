@@ -135,11 +135,20 @@ export default function EmeryScottPortfolio() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Quote Section - SMALL CARD on main-bg overlay */}
-      <QuoteSection />
+      {/* Continuous background for Quote + About */}
+      <div style={{
+        backgroundImage: `url(${IMAGES.mainBg})`,
+        backgroundSize: '100% auto',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#1a1210',
+      }}>
+        {/* Quote Section - SMALL CARD on main-bg overlay */}
+        <QuoteSection />
 
-      {/* About Section */}
-      <AboutSection />
+        {/* About Section */}
+        <AboutSection />
+      </div>
 
       {/* Rotunda Section - transforms into wings */}
       <RotundaSection 
@@ -280,11 +289,6 @@ function QuoteSection() {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundImage: `url(${IMAGES.mainBg})`,
-      backgroundSize: '100% auto',
-      backgroundPosition: 'top center',
-      backgroundRepeat: 'no-repeat',
-      backgroundColor: '#1a1210',
       minHeight: '40vh',
     }}>
       {/* Centered card */}
@@ -692,7 +696,7 @@ function ReviewsSection() {
   return (
     <section style={{
       background: 'transparent',
-      padding: '3rem 0',
+      padding: '1rem 0 3rem 0',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -2476,11 +2480,7 @@ const styles = {
     position: 'relative',
     zIndex: 10,
     padding: '8vh 6vw 12vh',
-    backgroundImage: `url(/images/Backdrops/main-bg.png)`,
-    backgroundSize: '100% auto',
-    backgroundPosition: 'top center',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: '#1a1210',
+    background: 'transparent',
   },
   aboutLayout: {
     display: 'flex',
@@ -2491,7 +2491,7 @@ const styles = {
     flexWrap: 'wrap',
   },
   aboutTextSide: { flex: '1 1 55%', minWidth: '300px', maxWidth: '600px' },
-  aboutPhotoSide: { flex: '1 1 35%', minWidth: '250px', maxWidth: '400px' },
+  aboutPhotoSide: { flex: '1 1 35%', minWidth: '280px', maxWidth: '480px' },
   aboutLabel: {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: '0.8rem',
@@ -2503,7 +2503,7 @@ const styles = {
     textShadow: '0 1px 3px rgba(0,0,0,0.4)',
   },
   photoFrame: {
-    aspectRatio: '3/4',
+    aspectRatio: '3/4.2',
     background: 'rgba(0,0,0,0.08)',
     border: '1px solid rgba(139, 115, 85, 0.2)',
     boxShadow: '0 4px 40px rgba(0,0,0,0.1)',
