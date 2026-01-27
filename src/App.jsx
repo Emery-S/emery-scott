@@ -1381,10 +1381,14 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
             opacity: voiceOverDropping ? 0 : 1,
           }}>
             {/* Container with content + glass */}
-            <div style={styles.glassContainer}>
+            <div className="glass-container" style={styles.glassContainer}>
               
               {/* REAL CONTENT - always here */}
-              <div style={styles.contentUnderneath}>
+              <div style={{
+                ...styles.contentUnderneath,
+                opacity: glassOpen ? 1 : 0,
+                transition: 'opacity 0.3s ease 0.2s',
+              }}>
                 {/* Reels content - left half */}
                 <div style={{
                   ...styles.halfContent,
@@ -1418,7 +1422,6 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   style={{
                     ...styles.glassPane,
                     transform: glassOpen ? 'translateX(-100%)' : 'translateX(0)',
-                    opacity: glassOpen ? 0 : 1,
                   }}
                   onMouseEnter={() => setReelsHovered(true)}
                   onMouseLeave={() => setReelsHovered(false)}
@@ -1446,7 +1449,6 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   style={{
                     ...styles.glassPane,
                     transform: glassOpen ? 'translateX(100%)' : 'translateX(0)',
-                    opacity: glassOpen ? 0 : 1,
                   }}
                   onMouseEnter={() => setGalleriesHovered(true)}
                   onMouseLeave={() => setGalleriesHovered(false)}
@@ -1922,7 +1924,7 @@ function ModelingWingContent({ transitioning, onBack }) {
           <h2 style={styles.modelingSectionTitle}>Digitals</h2>
           
           {/* Comp Card Layout - Horizontal with large headshot */}
-          <div style={styles.compCardLayout}>
+          <div className="comp-card-layout" style={styles.compCardLayout}>
             {/* Large Headshot - Left side */}
             <div style={styles.compHeadshot}>
               <div style={styles.digitalPlaceholderLarge}>
@@ -2516,19 +2518,17 @@ const styles = {
     boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 0 40px rgba(0,0,0,0.1)',
     backdropFilter: 'blur(8px)',
     WebkitBackdropFilter: 'blur(8px)',
-    minHeight: '500px',
   },
   aboutTextSide: { 
-    flex: '1 1 100%',
+    flex: '1 1 55%',
     minWidth: '280px',
     maxWidth: '600px',
   },
   aboutPhotoSide: { 
-    flex: '1 1 100%',
+    flex: '1 1 35%',
     minWidth: '280px',
     maxWidth: '480px',
     position: 'relative',
-    marginTop: '2rem',
   },
   aboutLabel: {
     fontFamily: "'Playfair Display', Georgia, serif",
@@ -3094,9 +3094,6 @@ const styles = {
     color: 'rgba(180, 160, 150, 0.6)',
     fontStyle: 'italic',
   },
-    fontStyle: 'italic',
-    color: 'rgba(80, 60, 70, 0.6)',
-  },
   
   // Gallery Buttons
   galleryButtons: {
@@ -3227,45 +3224,36 @@ if (typeof document !== 'undefined') {
       scrollbar-color: rgba(100, 80, 90, 0.4) rgba(60, 50, 55, 0.1);
     }
     
-    /* Styled scrollbar for about text section */
-    .about-text-side::-webkit-scrollbar {
-      display: block;
-      width: 6px;
-    }
-    .about-text-side::-webkit-scrollbar-track {
-      background: rgba(40, 30, 25, 0.2);
-      border-radius: 3px;
-    }
-    .about-text-side::-webkit-scrollbar-thumb {
-      background: rgba(139, 115, 85, 0.5);
-      border-radius: 3px;
-    }
-    .about-text-side::-webkit-scrollbar-thumb:hover {
-      background: rgba(139, 115, 85, 0.7);
-    }
-    .about-text-side {
-      scrollbar-width: thin;
-      scrollbar-color: rgba(139, 115, 85, 0.5) rgba(40, 30, 25, 0.2);
-    }
-    
-    /* Desktop optimization - side by side layout */
+    /* Desktop optimization - side by side layout with scrolling */
     @media (min-width: 900px) {
+      .about-layout-desktop {
+        height: 650px !important;
+        flex-wrap: nowrap !important;
+      }
       .about-layout-desktop .about-text-side {
         flex: 1 1 55% !important;
         max-width: 600px !important;
+        height: 100% !important;
+        overflow-y: auto !important;
+        padding-right: 1rem !important;
       }
       .about-layout-desktop .about-photo-side {
         flex: 1 1 35% !important;
         max-width: 480px !important;
         margin-top: 0 !important;
-      }
-      .about-layout-desktop {
-        height: 650px !important;
-      }
-      .about-layout-desktop .about-text-side {
         height: 100% !important;
-        overflow-y: auto !important;
-        padding-right: 1rem !important;
+      }
+    }
+    
+    /* Tablet/Medium screens optimization */
+    @media (max-width: 1200px) and (min-width: 769px) {
+      .about-layout-desktop {
+        max-width: 95% !important;
+      }
+      
+      /* Make glass container more compact */
+      .glass-container {
+        width: 95% !important;
       }
     }
     
@@ -3291,11 +3279,11 @@ if (typeof document !== 'undefined') {
         flex: 1 1 100% !important;
         max-width: 100% !important;
         width: 100% !important;
+        height: auto !important;
       }
       
       .about-layout-desktop .about-text-side {
         overflow-y: visible !important;
-        height: auto !important;
         padding-right: 0 !important;
       }
       
@@ -3310,6 +3298,19 @@ if (typeof document !== 'undefined') {
       .doorways > div {
         flex: 1 1 100% !important;
         max-width: 400px !important;
+      }
+      
+      /* Make glass container smaller on mobile */
+      .glass-container {
+        width: 95% !important;
+        height: clamp(400px, 60vh, 600px) !important;
+        min-height: 400px !important;
+      }
+      
+      /* Stack comp card vertically on mobile */
+      .comp-card-layout {
+        flex-direction: column !important;
+        height: auto !important;
       }
     }
     
