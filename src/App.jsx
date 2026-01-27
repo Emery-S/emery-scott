@@ -1084,11 +1084,11 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
         transition: 'opacity 0.8s ease',
       }} />
       
-      {/* Writing: Warm parchment with script - square image */}
+      {/* Writing: Warm parchment with script */}
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/writing-bg.png)',
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         opacity: showWritingBg ? 1 : 0,
@@ -1408,6 +1408,8 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
               <div style={{
                 ...styles.glassOverlayContainer,
                 pointerEvents: glassOpen ? 'none' : 'auto',
+                opacity: 1,
+                willChange: glassOpen ? 'none' : 'auto',
               }}>
                 {/* REELS glass pane - FROSTED */}
                 <div 
@@ -1415,6 +1417,7 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                     ...styles.glassPane,
                     transform: glassOpen ? 'translateX(-100%)' : 'translateX(0)',
                     opacity: glassOpen ? 0 : 1,
+                    willChange: 'transform, opacity',
                   }}
                   onMouseEnter={() => setReelsHovered(true)}
                   onMouseLeave={() => setReelsHovered(false)}
@@ -1443,6 +1446,7 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                     ...styles.glassPane,
                     transform: glassOpen ? 'translateX(100%)' : 'translateX(0)',
                     opacity: glassOpen ? 0 : 1,
+                    willChange: 'transform, opacity',
                   }}
                   onMouseEnter={() => setGalleriesHovered(true)}
                   onMouseLeave={() => setGalleriesHovered(false)}
@@ -1666,8 +1670,8 @@ function VoiceOverView() {
 
   return (
     <div style={{
-      width: '90%',
-      maxWidth: '800px',
+      width: '95%',
+      maxWidth: '1100px',
       minHeight: '55vh',
       display: 'flex',
       flexDirection: 'column',
@@ -2025,11 +2029,16 @@ function ModelingWingContent({ transitioning, onBack }) {
   );
 }
 
-// Runway Gallery - Walk video + runway photos (flowing layout) - BIGGER
+// Runway Gallery - Walk video FIXED + scrollable photos (3 per row)
 function RunwayGallery({ accent }) {
   return (
-    <div style={styles.flowingGallery}>
-      {/* Video featured */}
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1.5rem',
+      width: '100%',
+    }}>
+      {/* Video featured - FIXED, doesn't scroll */}
       <div style={styles.runwayVideoFeature}>
         <div style={styles.runwayVideoPlaceholder}>
           <span style={styles.digitalLabel}>RUNWAY WALK VIDEO</span>
@@ -2037,15 +2046,27 @@ function RunwayGallery({ accent }) {
         </div>
       </div>
       
-      {/* Photos flowing around - BIGGER */}
-      <div style={styles.flowingPhotos}>
-        {[1, 2, 3, 4, 5, 6].map((num) => (
-          <div key={num} style={styles.flowingPhoto}>
-            <div style={styles.galleryPhotoPlaceholder}>
-              <span style={styles.digitalFilename}>runway-{num}.jpg</span>
+      {/* Photos in scrollable container - 3 per row */}
+      <div className="runway-scroll" style={{
+        maxHeight: '500px',
+        overflowY: 'auto',
+        paddingRight: '1rem',
+      }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '1.5rem',
+        }}>
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <div key={num} style={{
+              aspectRatio: '4/5',
+            }}>
+              <div style={styles.galleryPhotoPlaceholder}>
+                <span style={styles.digitalFilename}>runway-{num}.jpg</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -2192,8 +2213,9 @@ Some journeys, the river knew, only end so that others can begin.`
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: '2rem',
+      justifyContent: 'flex-start',
+      padding: '0',
+      paddingTop: '1rem',
     }}>
       {/* Fixed square container with internal scroll */}
       <div style={{
@@ -2204,14 +2226,15 @@ Some journeys, the river knew, only end so that others can begin.`
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
+        marginTop: '0',
       }}>
-        {/* HEADER inside square */}
+        {/* HEADER - using standard headerLine style */}
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '1.5rem 2rem',
-          flexShrink: 0,
+          ...styles.headerLine,
+          padding: '0 2rem',
+          marginBottom: '1rem',
+          width: '100%',
+          maxWidth: 'none',
         }}>
           <button style={{
             ...styles.headerBackButton,
@@ -2223,13 +2246,9 @@ Some journeys, the river knew, only end so that others can begin.`
             </svg>
           </button>
           <h1 style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: 'clamp(1rem, 2vw, 1.3rem)',
-            fontWeight: 400,
-            letterSpacing: '0.3em',
-            color: 'rgba(60, 45, 30, 0.9)',
+            ...styles.headerTitle,
             opacity: appeared ? 1 : 0,
-            transition: 'opacity 0.6s ease',
+            color: 'rgba(60, 45, 30, 0.9)',
           }}>
             WRITING
           </h1>
@@ -2503,10 +2522,10 @@ const styles = {
     textShadow: '0 1px 3px rgba(0,0,0,0.4)',
   },
   photoFrame: {
-    aspectRatio: '3/4.2',
+    aspectRatio: '4/5',
     background: 'rgba(0,0,0,0.08)',
-    border: '1px solid rgba(139, 115, 85, 0.2)',
-    boxShadow: '0 4px 40px rgba(0,0,0,0.1)',
+    border: '8px solid rgba(139, 115, 85, 0.4)',
+    boxShadow: '0 4px 40px rgba(0,0,0,0.1), inset 0 0 20px rgba(0,0,0,0.05)',
     overflow: 'hidden',
   },
   aboutPhoto: {
@@ -2812,7 +2831,7 @@ const styles = {
     justifyContent: 'center',
     cursor: 'pointer',
     overflow: 'hidden',
-    transition: 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)',
+    transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
     background: 'transparent',
   },
   // FROSTED GLASS - shows the acting-bg background through it
@@ -3071,18 +3090,14 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   
-  // Flowing Gallery Layout - BIGGER PHOTOS
-  flowingGallery: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.5rem',
-    width: '100%',
-  },
+  
+  // Runway Gallery Styles
   runwayVideoFeature: {
     width: '100%',
     maxWidth: '700px',
     margin: '0 auto',
     aspectRatio: '16/9',
+    flexShrink: 0,
   },
   runwayVideoPlaceholder: {
     width: '100%',
@@ -3094,17 +3109,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     gap: '0.5rem',
-  },
-  flowingPhotos: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '1.5rem',
-    justifyContent: 'center',
-  },
-  flowingPhoto: {
-    flex: '1 1 280px',
-    maxWidth: '350px',
-    aspectRatio: '4/5',
   },
   galleryPhotoPlaceholder: {
     width: '100%',
@@ -3168,8 +3172,31 @@ if (typeof document !== 'undefined') {
         opacity: 0;
       }
     }
+    /* Hide scrollbars by default */
     *::-webkit-scrollbar { display: none; }
     * { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Show styled scrollbar for runway gallery */
+    .runway-scroll::-webkit-scrollbar {
+      display: block;
+      width: 8px;
+    }
+    .runway-scroll::-webkit-scrollbar-track {
+      background: rgba(60, 50, 55, 0.1);
+      border-radius: 4px;
+    }
+    .runway-scroll::-webkit-scrollbar-thumb {
+      background: rgba(100, 80, 90, 0.4);
+      border-radius: 4px;
+    }
+    .runway-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 80, 90, 0.6);
+    }
+    .runway-scroll {
+      -ms-overflow-style: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 80, 90, 0.4) rgba(60, 50, 55, 0.1);
+    }
   `;
   document.head.appendChild(style);
 }
