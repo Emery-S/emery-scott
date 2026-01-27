@@ -135,7 +135,7 @@ export default function EmeryScottPortfolio() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Quote Section - on parchment */}
+      {/* Quote Section - SMALL CARD on main-bg overlay */}
       <QuoteSection />
 
       {/* About Section */}
@@ -252,7 +252,7 @@ function HeroSection() {
 }
 
 // ============================================
-// QUOTE SECTION - Full cream parchment background
+// QUOTE SECTION - Small card on main-bg overlay
 // ============================================
 function QuoteSection() {
   const [visible, setVisible] = useState(false);
@@ -276,25 +276,34 @@ function QuoteSection() {
   return (
     <section ref={sectionRef} style={{
       position: 'relative',
-      padding: '6rem 2rem',
+      padding: '4rem 2rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundImage: `url(${IMAGES.creamBackdrop})`,
-      backgroundColor: '#f5f0e6',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
+      backgroundImage: `url(${IMAGES.mainBg})`,
+      backgroundSize: '100% auto',
+      backgroundPosition: 'top center',
+      backgroundRepeat: 'no-repeat',
+      backgroundColor: '#1a1210',
+      minHeight: '40vh',
     }}>
+      {/* Centered card */}
       <div style={{
-        maxWidth: '700px',
+        maxWidth: '600px',
+        padding: '3rem 3.5rem',
+        backgroundImage: `url(${IMAGES.creamBackdrop})`,
+        backgroundColor: '#f5f0e6',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.2)',
         textAlign: 'center',
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(30px)',
+        transform: visible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
         transition: 'all 0.8s ease',
       }}>
         <span style={{
           fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: '4rem',
+          fontSize: '3.5rem',
           color: 'rgba(139, 90, 90, 0.25)',
           display: 'block',
           lineHeight: 0.5,
@@ -302,7 +311,7 @@ function QuoteSection() {
         }}>"</span>
         <p style={{
           fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
+          fontSize: 'clamp(1rem, 2.2vw, 1.3rem)',
           fontWeight: 400,
           fontStyle: 'italic',
           lineHeight: 1.9,
@@ -315,7 +324,7 @@ function QuoteSection() {
         <p style={{
           marginTop: '1.5rem',
           fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: '0.9rem',
+          fontSize: '0.85rem',
           fontWeight: 500,
           letterSpacing: '0.15em',
           color: '#5a4a40',
@@ -1391,12 +1400,12 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                 </div>
               </div>
 
-              {/* GLASS LAYER - slides away to reveal content */}
+              {/* GLASS LAYER - slides away to reveal content - FROSTED to show BG */}
               <div style={{
                 ...styles.glassOverlayContainer,
                 pointerEvents: glassOpen ? 'none' : 'auto',
               }}>
-                {/* REELS glass pane */}
+                {/* REELS glass pane - FROSTED */}
                 <div 
                   style={{
                     ...styles.glassPane,
@@ -1424,7 +1433,7 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   opacity: glassOpen ? 0 : 1,
                 }} />
 
-                {/* GALLERIES glass pane */}
+                {/* GALLERIES glass pane - FROSTED */}
                 <div 
                   style={{
                     ...styles.glassPane,
@@ -1544,7 +1553,7 @@ function ReelsContent({ expandedVideo, onVideoSelect, isActive }) {
 }
 
 // ============================================
-// GALLERIES CONTENT - The actual gallery cards
+// GALLERIES CONTENT - The actual gallery cards WITH descriptions
 // ============================================
 function GalleriesContent({ isActive }) {
   const [expandedId, setExpandedId] = useState(null);
@@ -2012,7 +2021,7 @@ function ModelingWingContent({ transitioning, onBack }) {
   );
 }
 
-// Runway Gallery - Walk video + runway photos (flowing layout)
+// Runway Gallery - Walk video + runway photos (flowing layout) - BIGGER
 function RunwayGallery({ accent }) {
   return (
     <div style={styles.flowingGallery}>
@@ -2024,7 +2033,7 @@ function RunwayGallery({ accent }) {
         </div>
       </div>
       
-      {/* Photos flowing around */}
+      {/* Photos flowing around - BIGGER */}
       <div style={styles.flowingPhotos}>
         {[1, 2, 3, 4, 5, 6].map((num) => (
           <div key={num} style={styles.flowingPhoto}>
@@ -2038,7 +2047,7 @@ function RunwayGallery({ accent }) {
   );
 }
 
-// Commercial Gallery - Bright and smiling (masonry-like flow)
+// Commercial Gallery - Bright and smiling (masonry-like flow) - BIGGER
 function CommercialGallery({ accent }) {
   return (
     <div style={styles.masonryGallery}>
@@ -2380,47 +2389,6 @@ const styles = {
     fontFamily: "'Playfair Display', Georgia, serif",
     overflowX: 'hidden',
   },
-  creamBackdrop: {
-    position: 'fixed',
-    top: 0, left: 0, width: '100%', height: '100%',
-    backgroundImage: `url(${IMAGES.creamBackdrop})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    zIndex: 0,
-  },
-
-  // Candlelit Reveal
-  candlelitOverlay: {
-    position: 'fixed',
-    top: 0, left: 0, width: '100%', height: '100%',
-    zIndex: 1000,
-    pointerEvents: 'none',
-    transition: 'opacity 0.8s ease',
-  },
-  darkVeil: {
-    position: 'absolute',
-    top: 0, left: 0, width: '100%', height: '100%',
-    background: 'linear-gradient(180deg, #0a0806 0%, #12100e 50%, #0a0806 100%)',
-    transition: 'opacity 1.5s ease',
-  },
-  warmGlow: {
-    position: 'absolute',
-    top: '50%', left: '50%',
-    width: '100vmax',
-    height: '100vmax',
-    marginLeft: '-50vmax',
-    marginTop: '-50vmax',
-    background: 'radial-gradient(ellipse at center, rgba(255, 200, 120, 0.15) 0%, rgba(200, 140, 80, 0.08) 30%, transparent 60%)',
-    transition: 'opacity 1s ease, transform 2s cubic-bezier(0.23, 1, 0.32, 1)',
-  },
-  candleFlicker: {
-    position: 'absolute',
-    top: '40%',
-    width: '200px',
-    height: '300px',
-    background: 'radial-gradient(ellipse at center bottom, rgba(255, 180, 100, 0.2) 0%, rgba(200, 120, 60, 0.1) 40%, transparent 70%)',
-    transition: 'opacity 0.8s ease, transform 1s ease',
-  },
 
   // Menu
   menu: {
@@ -2501,67 +2469,6 @@ const styles = {
     textShadow: '1px 1px 10px rgba(0, 0, 0, 0.5)',
     lineHeight: 1.8,
     margin: 0,
-  },
-
-  // Quote Section
-  quoteSection: {
-    position: 'relative',
-    zIndex: 10,
-    padding: '8vh 8vw 12vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '50vh',
-  },
-  greenFade: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0,
-    height: '70%',
-    backgroundImage: `url(${IMAGES.greenBackdrop})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center bottom',
-    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
-    WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
-    zIndex: -1,
-  },
-  parchmentPaper: {
-    position: 'relative',
-    maxWidth: '700px',
-    padding: '4rem 5rem',
-    backgroundImage: `url(${IMAGES.creamBackdrop})`,
-    backgroundColor: '#f5f0e6',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    boxShadow: '0 8px 40px rgba(0,0,0,0.15), 0 2px 10px rgba(0,0,0,0.1)',
-    textAlign: 'center',
-  },
-  quoteMark: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: '5rem',
-    color: '#8b5a5a',
-    opacity: 0.35,
-    position: 'absolute',
-    top: '15px',
-    left: '25px',
-    lineHeight: 1,
-    userSelect: 'none',
-  },
-  quoteText: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.1rem, 2.5vw, 1.6rem)',
-    fontWeight: 400,
-    fontStyle: 'italic',
-    lineHeight: 1.9,
-    color: '#3d3530',
-    margin: 0,
-  },
-  quoteAttribution: {
-    marginTop: '1.5rem',
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: '0.85rem',
-    fontWeight: 500,
-    letterSpacing: '0.15em',
-    color: '#5a4a40',
   },
 
   // About Section
@@ -2674,16 +2581,16 @@ const styles = {
     textUnderlineOffset: '4px',
   },
 
-  // Rotunda
+  // Rotunda - ADJUSTED SPACING
   rotunda: {
     position: 'relative',
-    minHeight: '100vh',
+    minHeight: '90vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: '4vh',
-    paddingBottom: '2vh',
+    justifyContent: 'center',
+    paddingTop: '8vh',
+    paddingBottom: '4vh',
     paddingLeft: '5vw',
     paddingRight: '5vw',
     zIndex: 10,
@@ -2703,7 +2610,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     zIndex: 4,
   },
   fireTexture: {
@@ -2772,7 +2679,7 @@ const styles = {
     bottom: 0, left: 0, right: 0,
     padding: '2.5rem 1.5rem',
     textAlign: 'center',
-    background: 'linear-gradient(to top, rgba(15, 13, 10, 0.98) 0%, rgba(15, 13, 10, 0.7) 60%, transparent 100%)',
+    background: 'linear-gradient(to top, rgba(6, 18, 10, 0.98) 0%, rgba(6, 18, 10, 0.7) 60%, transparent 100%)',
   },
   doorTitle: {
     fontFamily: "'Playfair Display', Georgia, serif",
@@ -2789,25 +2696,6 @@ const styles = {
     fontWeight: 400,
     fontStyle: 'italic',
     color: '#d4c9b5',
-  },
-
-  // Back button
-  backButton: {
-    position: 'absolute',
-    top: '30px',
-    left: '30px',
-    zIndex: 100,
-    background: 'rgba(0, 0, 0, 0.2)',
-    border: '1px solid rgba(244, 239, 228, 0.3)',
-    borderRadius: '50%',
-    width: '44px',
-    height: '44px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    color: 'rgba(244, 239, 228, 0.7)',
-    transition: 'all 0.3s ease',
   },
 
   // Wing content - positioned in same space as doors
@@ -2856,32 +2744,12 @@ const styles = {
     // Subtle gold highlight
     textShadow: '0 0 30px rgba(180, 145, 155, 0.15)',
   },
-  headerSpacer: {
-    width: '40px',
-  },
   contentArea: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     flex: 1,
-  },
-  
-  wingTitle: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.8rem, 4vw, 3rem)',
-    fontWeight: 500,
-    letterSpacing: '0.25em',
-    color: '#e8dfd0',
-    textShadow: '0 2px 20px rgba(0,0,0,0.4)',
-    margin: 0,
-    transition: 'all 0.4s ease',
-  },
-  descendingLine: {
-    width: '1px',
-    background: 'linear-gradient(to bottom, transparent, rgba(244, 239, 228, 0.4), transparent)',
-    margin: '1rem 0',
-    transition: 'height 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
   },
 
   // Choice container for Reels/Galleries/VoiceOver
@@ -2916,7 +2784,7 @@ const styles = {
     overflow: 'hidden',
     transition: 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)',
   },
-  // Glass overlay that sits on top and slides away
+  // Glass overlay that sits on top and slides away - FROSTED GLASS
   glassOverlayContainer: {
     position: 'absolute',
     top: 0, left: 0, width: '100%', height: '100%',
@@ -2947,14 +2815,14 @@ const styles = {
     transition: 'all 0.7s cubic-bezier(0.23, 1, 0.32, 1)',
     background: 'transparent',
   },
-  // Glass frost - matches lighter auburn backdrop
+  // FROSTED GLASS - shows the acting-bg background through it
   glassFrost: {
     position: 'absolute',
     top: 0, left: 0, width: '100%', height: '100%',
-    // Match the acting wing lighter auburn backdrop
-    background: 'linear-gradient(180deg, rgba(75, 45, 45, 0.95) 0%, rgba(55, 32, 32, 0.98) 50%, rgba(40, 25, 25, 1) 100%)',
-    backdropFilter: 'blur(12px)',
-    WebkitBackdropFilter: 'blur(12px)',
+    // Frosted glass effect - semi-transparent with blur
+    background: 'rgba(40, 25, 25, 0.3)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
   },
   
   // REAL CONTENT styles - Reels bars and Gallery cards
@@ -3105,161 +2973,6 @@ const styles = {
     border: 'none',
   },
 
-  // Galleries styling
-  galleriesContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  horizontalScroll: {
-    display: 'flex',
-    gap: '4rem',
-    width: '100%',
-    overflowX: 'auto',
-    padding: '4vh 6vw',
-    scrollSnapType: 'x mandatory',
-  },
-  galleryItem: {
-    display: 'flex',
-    gap: '2rem',
-    minWidth: '80vw',
-    maxWidth: '900px',
-    scrollSnapAlign: 'center',
-    transition: 'all 0.6s ease',
-  },
-  galleryImageContainer: {
-    flex: '0 0 50%',
-  },
-  galleryImagePlaceholder: {
-    width: '100%',
-    aspectRatio: '4/5',
-    background: 'rgba(244, 239, 228, 0.03)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  placeholderText: {
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '0.9rem',
-    fontStyle: 'italic',
-    color: 'rgba(244, 239, 228, 0.25)',
-    letterSpacing: '0.2em',
-  },
-  galleryTextContainer: {
-    flex: '0 0 45%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    paddingRight: '2rem',
-  },
-  galleryTitle: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-    fontWeight: 500,
-    color: '#f4efe4',
-    marginBottom: '0.5rem',
-  },
-  galleryRole: {
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1rem',
-    fontStyle: 'italic',
-    color: '#c4a35a',
-    letterSpacing: '0.1em',
-    marginBottom: '1.5rem',
-  },
-  galleryDescription: {
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.05rem',
-    lineHeight: 1.8,
-    color: '#d4c9b5',
-  },
-  scrollHint: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    color: 'rgba(244, 239, 228, 0.3)',
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '0.85rem',
-    fontStyle: 'italic',
-    marginTop: '2vh',
-  },
-  localBackButton: {
-    position: 'absolute',
-    bottom: '30px',
-    left: '30px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    background: 'transparent',
-    border: 'none',
-    color: 'rgba(244, 239, 228, 0.5)',
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-  },
-
-  // Voice over - trapdoor experience
-  voiceOverContainer: {
-    position: 'relative',
-    width: '100%',
-    minHeight: '50vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: '4vh',
-  },
-  voiceOverTitle: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-    fontWeight: 500,
-    letterSpacing: '0.25em',
-    color: '#d4b0b8',
-    textShadow: '0 0 60px rgba(180, 120, 140, 0.4), 0 0 120px rgba(100, 60, 80, 0.2)',
-    margin: 0,
-    transition: 'all 0.8s ease',
-  },
-  voidAtmosphere: {
-    position: 'absolute',
-    top: 0, left: 0, width: '100%', height: '100%',
-    background: `
-      radial-gradient(ellipse at 50% 30%, rgba(80, 40, 60, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 30% 70%, rgba(60, 30, 50, 0.1) 0%, transparent 40%),
-      radial-gradient(ellipse at 70% 60%, rgba(100, 50, 70, 0.08) 0%, transparent 45%)
-    `,
-    pointerEvents: 'none',
-  },
-  whisperText: {
-    position: 'absolute',
-    top: '30%',
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.1rem',
-    fontStyle: 'italic',
-    color: 'rgba(212, 176, 184, 0.6)',
-    letterSpacing: '0.3em',
-    transition: 'all 1.5s ease',
-  },
-  voiceDescription: {
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.3rem',
-    fontStyle: 'italic',
-    color: 'rgba(244, 239, 228, 0.5)',
-    marginTop: '1.5rem',
-    letterSpacing: '0.2em',
-    transition: 'opacity 1s ease 0.3s',
-  },
-  audioSamplesArea: {
-    marginTop: '4rem',
-    transition: 'opacity 1s ease',
-  },
-  comingSoon: {
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '0.95rem',
-    color: 'rgba(244, 239, 228, 0.25)',
-    fontStyle: 'italic',
-  },
-
   // ==========================================
   // MODELING WING STYLES - Soft summer light
   // ==========================================
@@ -3358,7 +3071,7 @@ const styles = {
     transition: 'all 0.3s ease',
   },
   
-  // Flowing Gallery Layout - fills space horizontally - WIDE
+  // Flowing Gallery Layout - BIGGER PHOTOS
   flowingGallery: {
     display: 'flex',
     flexDirection: 'column',
@@ -3389,8 +3102,8 @@ const styles = {
     justifyContent: 'center',
   },
   flowingPhoto: {
-    flex: '1 1 180px',
-    maxWidth: '250px',
+    flex: '1 1 280px',
+    maxWidth: '350px',
     aspectRatio: '4/5',
   },
   galleryPhotoPlaceholder: {
@@ -3403,11 +3116,11 @@ const styles = {
     justifyContent: 'center',
   },
   
-  // Masonry Gallery - Commercial (bright, varied sizes)
+  // Masonry Gallery - Commercial (bright, varied sizes) - BIGGER
   masonryGallery: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-    gridAutoRows: '150px',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gridAutoRows: '200px',
     gap: '1.5rem',
     width: '100%',
   },
@@ -3427,142 +3140,6 @@ const styles = {
     flex: '0 0 280px',
     aspectRatio: '3/4',
   },
-
-  // ==========================================
-  // WRITING WING STYLES - Fairy Jungle Sunrise
-  // ==========================================
-  
-  // Floating fireflies
-  firefliesContainer: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0, bottom: 0,
-    overflow: 'hidden',
-    pointerEvents: 'none',
-    zIndex: 1,
-  },
-  firefly: {
-    position: 'absolute',
-    width: '6px',
-    height: '6px',
-    background: 'radial-gradient(circle, rgba(255, 255, 200, 0.9) 0%, rgba(255, 220, 100, 0.6) 50%, transparent 100%)',
-    borderRadius: '50%',
-    animation: 'fireflyFloat 5s ease-in-out infinite',
-    boxShadow: '0 0 10px rgba(255, 220, 100, 0.8), 0 0 20px rgba(255, 200, 80, 0.4)',
-  },
-  
-  // Sun rays
-  sunRays: {
-    position: 'absolute',
-    top: '-20%',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '150%',
-    height: '60%',
-    background: `
-      conic-gradient(
-        from 180deg at 50% 100%,
-        transparent 0deg,
-        rgba(255, 220, 120, 0.15) 10deg,
-        transparent 20deg,
-        rgba(255, 200, 100, 0.1) 30deg,
-        transparent 40deg,
-        rgba(255, 230, 140, 0.12) 50deg,
-        transparent 60deg,
-        rgba(255, 210, 110, 0.08) 70deg,
-        transparent 80deg,
-        rgba(255, 220, 120, 0.1) 90deg,
-        transparent 100deg,
-        rgba(255, 200, 100, 0.12) 110deg,
-        transparent 120deg,
-        rgba(255, 230, 140, 0.08) 130deg,
-        transparent 140deg,
-        rgba(255, 210, 110, 0.1) 150deg,
-        transparent 160deg,
-        rgba(255, 220, 120, 0.12) 170deg,
-        transparent 180deg
-      )
-    `,
-    pointerEvents: 'none',
-    opacity: 0.8,
-  },
-  
-  // Story card - glass morphism with nature feel
-  storyCard: {
-    width: '100%',
-    maxWidth: '800px',
-    background: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    borderRadius: '20px',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    overflow: 'hidden',
-    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-    cursor: 'pointer',
-    position: 'relative',
-    zIndex: 2,
-  },
-  
-  // Title bar
-  storyTitleBar: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    padding: '1.25rem 1.5rem',
-    transition: 'background 0.3s ease',
-    minHeight: '80px',
-  },
-  storyIcon: {
-    fontSize: '1.8rem',
-    color: 'rgba(255, 255, 255, 0.9)',
-    textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-    flexShrink: 0,
-  },
-  storyTitle: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-    fontWeight: 500,
-    fontStyle: 'italic',
-    color: 'rgba(255, 255, 255, 0.95)',
-    margin: 0,
-    flex: 1,
-    textShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-    letterSpacing: '0.02em',
-  },
-  expandIcon: {
-    fontSize: '1.5rem',
-    color: 'rgba(255, 255, 255, 0.7)',
-    transition: 'transform 0.4s ease',
-    flexShrink: 0,
-  },
-  
-  // Story content wrapper
-  storyContentWrapper: {
-    transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-    overflow: 'hidden',
-    background: 'rgba(255, 255, 255, 0.08)',
-  },
-  storyScrollArea: {
-    maxHeight: '55vh',
-    overflowY: 'auto',
-  },
-  
-  // Fairy tale paragraph style
-  fairyParagraph: {
-    fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
-    lineHeight: 2,
-    color: 'rgba(255, 255, 255, 0.92)',
-    marginBottom: '1.5rem',
-    textIndent: '2rem',
-    textShadow: '0 1px 3px rgba(0, 0, 0, 0.15)',
-  },
-  storyEnd: {
-    textAlign: 'center',
-    fontSize: '1.2rem',
-    color: 'rgba(255, 255, 255, 0.6)',
-    marginTop: '2rem',
-    letterSpacing: '0.5em',
-  },
 };
 
 // ============================================
@@ -3571,36 +3148,6 @@ const styles = {
 if (typeof document !== 'undefined') {
   const style = document.createElement('style');
   style.textContent = `
-    @keyframes drift {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(30px, -20px) rotate(5deg); }
-    }
-    @keyframes drift2 {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(-20px, 30px) rotate(-3deg); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes fireflyFloat {
-      0%, 100% { 
-        transform: translate(0, 0) scale(1);
-        opacity: 0.3;
-      }
-      25% {
-        transform: translate(15px, -25px) scale(1.2);
-        opacity: 1;
-      }
-      50% { 
-        transform: translate(-10px, -40px) scale(0.8);
-        opacity: 0.6;
-      }
-      75% {
-        transform: translate(20px, -20px) scale(1.1);
-        opacity: 0.9;
-      }
-    }
     @keyframes soundWave {
       0% { 
         transform: scaleY(0.4);
@@ -3609,136 +3156,6 @@ if (typeof document !== 'undefined') {
       100% { 
         transform: scaleY(1.2);
         opacity: 1;
-      }
-    }
-    @keyframes waveFloat {
-      0%, 100% { 
-        transform: translateX(0);
-        opacity: 0.3;
-      }
-      50% { 
-        transform: translateX(10px);
-        opacity: 0.6;
-      }
-    }
-    @keyframes vineGrow {
-      0% {
-        stroke-dashoffset: 1000;
-        opacity: 0;
-      }
-      30% {
-        opacity: 0.6;
-      }
-      100% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-      }
-    }
-    @keyframes vineCreep {
-      0%, 100% {
-        transform: translate(0, 0);
-      }
-      50% {
-        transform: translate(3px, -2px);
-      }
-    }
-    @keyframes emberGlow {
-      0%, 100% {
-        opacity: 0.5;
-        filter: brightness(1);
-      }
-      50% {
-        opacity: 1;
-        filter: brightness(1.5);
-      }
-    }
-    @keyframes emberFloat {
-      0%, 100% {
-        transform: translate(0, 0);
-        opacity: 0.4;
-      }
-      25% {
-        transform: translate(10px, -15px);
-        opacity: 0.9;
-      }
-      50% {
-        transform: translate(-5px, -30px);
-        opacity: 0.6;
-      }
-      75% {
-        transform: translate(8px, -20px);
-        opacity: 0.8;
-      }
-    }
-    @keyframes berryPulse {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.5;
-      }
-      50% {
-        transform: scale(1.3);
-        opacity: 0.8;
-      }
-    }
-    @keyframes hexUnfold {
-      0% {
-        stroke-dashoffset: 300;
-        opacity: 0;
-      }
-      100% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-      }
-    }
-    @keyframes hexPulse {
-      0%, 100% {
-        opacity: 0.3;
-      }
-      50% {
-        opacity: 0.5;
-      }
-    }
-    @keyframes dustFloat {
-      0% {
-        transform: translate(0, 0) scale(0.8);
-        opacity: 0;
-      }
-      20% {
-        opacity: 0.8;
-      }
-      80% {
-        opacity: 0.6;
-      }
-      100% {
-        transform: translate(var(--drift-x, 20px), var(--drift-y, -40px)) scale(1.2);
-        opacity: 0;
-      }
-    }
-    @keyframes inkDraw {
-      0% {
-        stroke-dashoffset: 900;
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.4;
-      }
-      100% {
-        stroke-dashoffset: 0;
-        opacity: 0.4;
-      }
-    }
-    @keyframes berryPulse {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      20% {
-        transform: scale(1.2);
-        opacity: 0.6;
-      }
-      40%, 100% {
-        transform: scale(1);
-        opacity: 0.5;
       }
     }
     @keyframes rippleOut {
