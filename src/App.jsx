@@ -292,9 +292,9 @@ function QuoteSection() {
       minHeight: '40vh',
     }}>
       {/* Centered card */}
-      <div style={{
+      <div className="quote-card-mobile" style={{
         maxWidth: '600px',
-        padding: '3rem 3.5rem',
+        padding: 'clamp(2rem, 5vw, 3.5rem)',
         backgroundImage: `url(${IMAGES.creamBackdrop})`,
         backgroundColor: '#f5f0e6',
         backgroundSize: 'cover',
@@ -363,8 +363,8 @@ function AboutSection() {
 
   return (
     <section ref={sectionRef} style={styles.aboutSection}>
-      <div style={styles.aboutLayout}>
-        <div style={styles.aboutTextSide}>
+      <div className="about-layout-desktop" style={styles.aboutLayout}>
+        <div className="about-text-side" style={styles.aboutTextSide}>
           <p style={{
             ...styles.aboutLabel,
             opacity: visible ? 1 : 0,
@@ -437,7 +437,7 @@ function AboutSection() {
             </div>
           </div>
         </div>
-        <div style={{
+        <div className="about-photo-side" style={{
           ...styles.aboutPhotoSide,
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.95)',
@@ -500,11 +500,11 @@ function KeyAspectsSection() {
   return (
     <section ref={sectionRef} style={{
       background: 'transparent',
-      padding: '6rem 2rem',
+      padding: 'clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 2rem)',
       position: 'relative',
     }}>
       {/* Instagram - Fixed right side */}
-      <div style={{
+      <div className="key-aspects-instagram" style={{
         position: 'absolute',
         right: '2rem',
         top: '2rem',
@@ -595,8 +595,8 @@ function KeyAspectsSection() {
         maxWidth: '1200px',
         margin: '0 auto',
         display: 'grid',
-        gridTemplateColumns: 'minmax(320px, 1.3fr) 1fr 1fr',
-        gap: '3rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        gap: 'clamp(1.5rem, 3vw, 3rem)',
         alignItems: 'start',
       }}>
         {/* Left image - BIGGER */}
@@ -1118,7 +1118,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       {/* Container for doors AND wing content */}
       <div style={styles.rotundaContent}>
         {/* Three Doors */}
-        <div style={{
+        <div className="doorways" style={{
           ...styles.doorways,
           opacity: doorAnimationPhase === 'expanding' || doorAnimationPhase === 'gone' || activeWing ? 0 : 1,
           pointerEvents: activeWing || doorAnimationPhase ? 'none' : 'auto',
@@ -1672,7 +1672,7 @@ function VoiceOverView() {
     <div style={{
       width: '95%',
       maxWidth: '1100px',
-      minHeight: '70vh',
+      minHeight: 'clamp(450px, 70vh, 900px)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -2417,18 +2417,19 @@ const styles = {
   // Menu
   menu: {
     position: 'fixed',
-    top: '25px',
+    top: 'clamp(15px, 3vh, 25px)',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 100,
     display: 'flex',
     alignItems: 'center',
-    gap: '1.5rem',
+    gap: 'clamp(0.8rem, 2vw, 1.5rem)',
     fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: '0.75rem',
+    fontSize: 'clamp(0.6rem, 1.2vw, 0.75rem)',
     fontWeight: 500,
     letterSpacing: '0.18em',
     textTransform: 'uppercase',
+    padding: '0 1rem',
   },
   menuDot: {
     color: 'rgba(244, 239, 228, 0.4)',
@@ -2499,37 +2500,35 @@ const styles = {
   aboutSection: {
     position: 'relative',
     zIndex: 10,
-    padding: '8vh 6vw 12vh',
+    padding: 'clamp(4vh, 8vh, 10vh) clamp(4vw, 6vw, 8vw) clamp(6vh, 12vh, 15vh)',
     background: 'transparent',
   },
   aboutLayout: {
     display: 'flex',
-    gap: 'clamp(3rem, 6vw, 6rem)',
+    gap: 'clamp(2rem, 5vw, 6rem)',
     alignItems: 'flex-start',
     maxWidth: '1200px',
     margin: '0 auto',
     flexWrap: 'wrap',
     position: 'relative',
     background: 'rgba(40, 30, 25, 0.35)',
-    padding: '3rem 3.5rem',
+    padding: 'clamp(2rem, 4vw, 3.5rem)',
     boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 0 40px rgba(0,0,0,0.1)',
     backdropFilter: 'blur(8px)',
     WebkitBackdropFilter: 'blur(8px)',
-    height: '650px',
+    minHeight: '500px',
   },
   aboutTextSide: { 
-    flex: '1 1 55%', 
-    minWidth: '300px', 
+    flex: '1 1 100%',
+    minWidth: '280px',
     maxWidth: '600px',
-    height: '100%',
-    overflowY: 'auto',
-    paddingRight: '1rem',
   },
   aboutPhotoSide: { 
-    flex: '1 1 35%', 
-    minWidth: '280px', 
+    flex: '1 1 100%',
+    minWidth: '280px',
     maxWidth: '480px',
     position: 'relative',
+    marginTop: '2rem',
   },
   aboutLabel: {
     fontFamily: "'Playfair Display', Georgia, serif",
@@ -2544,7 +2543,7 @@ const styles = {
   photoFrame: {
     aspectRatio: '4/5',
     background: 'rgba(0,0,0,0.08)',
-    border: '8px solid rgba(139, 115, 85, 0.4)',
+    border: 'clamp(4px, 1vw, 8px) solid rgba(139, 115, 85, 0.4)',
     boxShadow: '0 4px 40px rgba(0,0,0,0.1), inset 0 0 20px rgba(0,0,0,0.05)',
     overflow: 'hidden',
   },
@@ -2628,10 +2627,10 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: '8vh',
-    paddingBottom: '4vh',
-    paddingLeft: '5vw',
-    paddingRight: '5vw',
+    paddingTop: 'clamp(4vh, 8vh, 10vh)',
+    paddingBottom: 'clamp(2vh, 4vh, 6vh)',
+    paddingLeft: 'clamp(3vw, 5vw, 7vw)',
+    paddingRight: 'clamp(3vw, 5vw, 7vw)',
     zIndex: 10,
     overflow: 'hidden',
     backgroundColor: '#1a2f2a',
@@ -2677,7 +2676,7 @@ const styles = {
   },
   doorways: {
     display: 'flex',
-    gap: 'clamp(2rem, 5vw, 5rem)',
+    gap: 'clamp(1.5rem, 4vw, 5rem)',
     justifyContent: 'center',
     alignItems: 'stretch',
     flexWrap: 'wrap',
@@ -2686,9 +2685,9 @@ const styles = {
     perspective: '1000px',
   },
   doorway: {
-    flex: '1 1 260px',
+    flex: '1 1 clamp(220px, 25vw, 280px)',
     maxWidth: '320px',
-    minHeight: '420px',
+    minHeight: 'clamp(380px, 50vh, 450px)',
     position: 'relative',
   },
   doorArch: {
@@ -2805,7 +2804,7 @@ const styles = {
     position: 'relative',
     width: '90%',
     maxWidth: '1200px',
-    height: '70vh',
+    height: 'clamp(500px, 70vh, 800px)',
     minHeight: '500px',
     display: 'flex',
     overflow: 'hidden',
@@ -3035,21 +3034,24 @@ const styles = {
     display: 'flex',
     gap: '1.5rem',
     width: '100%',
-    height: '65vh',
+    height: 'clamp(400px, 65vh, 600px)',
     minHeight: '400px',
     maxHeight: '600px',
+    flexWrap: 'wrap',
   },
   compHeadshot: {
-    flex: '0 0 50%',
+    flex: '1 1 clamp(250px, 45%, 500px)',
     height: '100%',
+    minHeight: '300px',
   },
   compSideGrid: {
-    flex: 1,
+    flex: '1 1 clamp(250px, 45%, 500px)',
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
     gridTemplateRows: 'repeat(2, 1fr)',
     gap: '0.75rem',
     height: '100%',
+    minHeight: '300px',
   },
   compSidePhoto: {
     width: '100%',
@@ -3225,12 +3227,117 @@ if (typeof document !== 'undefined') {
       scrollbar-color: rgba(100, 80, 90, 0.4) rgba(60, 50, 55, 0.1);
     }
     
+    /* Styled scrollbar for about text section */
+    .about-text-side::-webkit-scrollbar {
+      display: block;
+      width: 6px;
+    }
+    .about-text-side::-webkit-scrollbar-track {
+      background: rgba(40, 30, 25, 0.2);
+      border-radius: 3px;
+    }
+    .about-text-side::-webkit-scrollbar-thumb {
+      background: rgba(139, 115, 85, 0.5);
+      border-radius: 3px;
+    }
+    .about-text-side::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 115, 85, 0.7);
+    }
+    .about-text-side {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(139, 115, 85, 0.5) rgba(40, 30, 25, 0.2);
+    }
+    
+    /* Desktop optimization - side by side layout */
+    @media (min-width: 900px) {
+      .about-layout-desktop .about-text-side {
+        flex: 1 1 55% !important;
+        max-width: 600px !important;
+      }
+      .about-layout-desktop .about-photo-side {
+        flex: 1 1 35% !important;
+        max-width: 480px !important;
+        margin-top: 0 !important;
+      }
+      .about-layout-desktop {
+        height: 650px !important;
+      }
+      .about-layout-desktop .about-text-side {
+        height: 100% !important;
+        overflow-y: auto !important;
+        padding-right: 1rem !important;
+      }
+    }
+    
     /* Mobile responsive adjustments */
     @media (max-width: 768px) {
       /* Ensure rotunda stays full height on mobile */
       .rotunda-section {
         min-height: 100vh;
         min-height: -webkit-fill-available;
+        padding-left: 3vw !important;
+        padding-right: 3vw !important;
+      }
+      
+      /* Stack about section vertically on mobile */
+      .about-layout-desktop {
+        flex-direction: column;
+        align-items: center;
+        height: auto !important;
+      }
+      
+      .about-layout-desktop .about-text-side,
+      .about-layout-desktop .about-photo-side {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      
+      .about-layout-desktop .about-text-side {
+        overflow-y: visible !important;
+        height: auto !important;
+        padding-right: 0 !important;
+      }
+      
+      /* Make menu smaller on mobile */
+      nav[style*="position: fixed"] {
+        font-size: 0.65rem !important;
+        gap: 1rem !important;
+        padding: 0 1rem;
+      }
+      
+      /* Adjust doorway sizing for mobile */
+      .doorways > div {
+        flex: 1 1 100% !important;
+        max-width: 400px !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      /* Very small screens */
+      .about-layout-desktop {
+        padding: 1.5rem !important;
+      }
+      
+      /* Quote card smaller padding */
+      .quote-card-mobile {
+        padding: 2rem !important;
+      }
+      
+      /* Hide Instagram on very small screens */
+      .key-aspects-instagram {
+        display: none !important;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      /* Move Instagram to bottom on smaller screens */
+      .key-aspects-instagram {
+        position: relative !important;
+        right: auto !important;
+        top: auto !important;
+        margin: 2rem auto !important;
+        justify-content: center !important;
       }
     }
     
