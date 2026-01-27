@@ -252,33 +252,50 @@ function HeroSection() {
 }
 
 // ============================================
-// QUOTE SECTION - Parchment container
+// QUOTE SECTION - Full cream parchment background
 // ============================================
 function QuoteSection() {
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section style={{
+    <section ref={sectionRef} style={{
       position: 'relative',
-      padding: '5rem 2rem',
+      padding: '6rem 2rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#1a1210',
+      backgroundImage: `url(${IMAGES.creamBackdrop})`,
+      backgroundColor: '#f5f0e6',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
     }}>
-      {/* Parchment card */}
       <div style={{
-        maxWidth: '750px',
+        maxWidth: '700px',
         textAlign: 'center',
-        padding: '3.5rem 4rem',
-        backgroundColor: '#f5f0e6',
-        backgroundImage: `url(${IMAGES.creamBackdrop})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        boxShadow: '0 8px 40px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.2)',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'all 0.8s ease',
       }}>
         <span style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: '4rem',
-          color: 'rgba(139, 90, 90, 0.3)',
+          color: 'rgba(139, 90, 90, 0.25)',
           display: 'block',
           lineHeight: 0.5,
           marginBottom: '1.5rem',
