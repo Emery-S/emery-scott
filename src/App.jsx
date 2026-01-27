@@ -1885,8 +1885,8 @@ function ModelingWingContent({ transitioning, onBack }) {
       <div style={styles.headerLine}>
         <button style={{
           ...styles.headerBackButton,
-          borderColor: 'rgba(100, 80, 90, 0.35)',
-          color: 'rgba(70, 55, 65, 0.8)',
+          borderColor: 'rgba(200, 180, 170, 0.4)',
+          color: 'rgba(230, 220, 215, 0.9)',
         }} onClick={onBack}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M15 18l-6-6 6-6" />
@@ -1895,8 +1895,8 @@ function ModelingWingContent({ transitioning, onBack }) {
         <h1 style={{
           ...styles.headerTitle,
           opacity: appeared ? 1 : 0,
-          color: 'rgba(60, 45, 55, 0.9)',
-          textShadow: '0 0 30px rgba(180, 140, 150, 0.2)',
+          color: '#e8dfd0',
+          textShadow: '0 0 30px rgba(180, 145, 155, 0.3)',
         }}>
           MODELING
         </h1>
@@ -2238,8 +2238,8 @@ Some journeys, the river knew, only end so that others can begin.`
         }}>
           <button style={{
             ...styles.headerBackButton,
-            borderColor: 'rgba(80, 60, 40, 0.4)',
-            color: 'rgba(70, 50, 35, 0.9)',
+            borderColor: 'rgba(140, 110, 80, 0.35)',
+            color: 'rgba(100, 80, 60, 0.9)',
           }} onClick={onBack}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M15 18l-6-6 6-6" />
@@ -2249,6 +2249,7 @@ Some journeys, the river knew, only end so that others can begin.`
             ...styles.headerTitle,
             opacity: appeared ? 1 : 0,
             color: 'rgba(60, 45, 30, 0.9)',
+            textShadow: '0 0 30px rgba(180, 145, 125, 0.25)',
           }}>
             WRITING
           </h1>
@@ -2514,14 +2515,13 @@ const styles = {
     boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 0 40px rgba(0,0,0,0.1)',
     backdropFilter: 'blur(8px)',
     WebkitBackdropFilter: 'blur(8px)',
-    minHeight: '650px',
-    maxHeight: '650px',
-    overflow: 'hidden',
+    height: '650px',
   },
   aboutTextSide: { 
     flex: '1 1 55%', 
     minWidth: '300px', 
     maxWidth: '600px',
+    height: '100%',
     overflowY: 'auto',
     paddingRight: '1rem',
   },
@@ -2530,7 +2530,6 @@ const styles = {
     minWidth: '280px', 
     maxWidth: '480px',
     position: 'relative',
-    zIndex: 1,
   },
   aboutLabel: {
     fontFamily: "'Playfair Display', Georgia, serif",
@@ -2719,7 +2718,7 @@ const styles = {
     bottom: 0, left: 0, right: 0,
     padding: '2.5rem 1.5rem',
     textAlign: 'center',
-    background: 'linear-gradient(to top, rgba(6, 18, 10, 0.98) 0%, rgba(6, 18, 10, 0.7) 60%, transparent 100%)',
+    background: 'linear-gradient(to top, rgba(30, 25, 20, 0.95) 0%, rgba(30, 25, 20, 0.7) 60%, transparent 100%)',
   },
   doorTitle: {
     fontFamily: "'Playfair Display', Georgia, serif",
@@ -3025,9 +3024,10 @@ const styles = {
     fontWeight: 400,
     fontStyle: 'italic',
     letterSpacing: '0.2em',
-    color: 'rgba(80, 60, 70, 0.85)',
+    color: 'rgba(230, 220, 215, 0.9)',
     textAlign: 'center',
     marginBottom: '1.5rem',
+    textShadow: '0 0 20px rgba(180, 145, 155, 0.2)',
   },
   
   // Comp Card Layout - TRUE HORIZONTAL like a model card
@@ -3059,8 +3059,8 @@ const styles = {
   digitalPlaceholder: {
     width: '100%',
     height: '100%',
-    background: 'rgba(60, 50, 55, 0.15)',
-    border: '1px dashed rgba(80, 60, 70, 0.3)',
+    background: 'rgba(200, 190, 180, 0.12)',
+    border: '1px dashed rgba(180, 160, 150, 0.4)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -3070,8 +3070,8 @@ const styles = {
   digitalPlaceholderLarge: {
     width: '100%',
     height: '100%',
-    background: 'rgba(60, 50, 55, 0.18)',
-    border: '1px dashed rgba(80, 60, 70, 0.35)',
+    background: 'rgba(200, 190, 180, 0.15)',
+    border: '1px dashed rgba(180, 160, 150, 0.45)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -3083,12 +3083,15 @@ const styles = {
     fontSize: '0.7rem',
     fontWeight: 500,
     letterSpacing: '0.1em',
-    color: 'rgba(60, 45, 55, 0.8)',
+    color: 'rgba(220, 210, 200, 0.85)',
     textAlign: 'center',
   },
   digitalFilename: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '0.65rem',
+    color: 'rgba(180, 160, 150, 0.6)',
+    fontStyle: 'italic',
+  },
     fontStyle: 'italic',
     color: 'rgba(80, 60, 70, 0.6)',
   },
