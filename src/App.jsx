@@ -7,7 +7,9 @@ const IMAGES = {
   hero: '/images/Backdrops/hero.jpeg',
   creamBackdrop: '/images/Backdrops/cream.png',
   greenBackdrop: '/images/Backdrops/green.png',
-  aboutPhoto: '/images/Backdrops/about-photo.jpg',
+  aboutPhoto: '/images/Backdrops/EmeryScott38.jpg',
+  aboutPhotoExpanded: '/images/Backdrops/EmeryScott27.jpeg',
+  keyAspectsPhoto: '/images/Backdrops/KeyAspects.jpg',
   mainBg: '/images/Backdrops/main-bg.png',
   mainBgAlt: '/images/Backdrops/main-bg-alt.png',
 };
@@ -444,7 +446,14 @@ function AboutSection() {
           transition: 'all 0.8s ease 0.2s',
         }}>
           <div style={styles.photoFrame}>
-            <img src={IMAGES.aboutPhoto} alt="Emery" style={styles.aboutPhoto} />
+            <img 
+              src={bioExpanded ? IMAGES.aboutPhotoExpanded : IMAGES.aboutPhoto} 
+              alt="Emery" 
+              style={{
+                ...styles.aboutPhoto,
+                transition: 'opacity 0.5s ease',
+              }} 
+            />
           </div>
         </div>
       </div>
@@ -614,7 +623,7 @@ function KeyAspectsSection() {
             maxHeight: '600px',
           }}>
             <img 
-              src="/images/Backdrops/features-photo.jpg" 
+              src={IMAGES.keyAspectsPhoto} 
               alt="Emery" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => {
@@ -1364,7 +1373,44 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
           {getTitle()}
         </h1>
         
-        <div style={{ width: '40px' }} />
+        {/* Download Resume Button */}
+        <a 
+          href="/documents/EmeryScott-Resume.pdf" 
+          download="EmeryScott-Resume.pdf"
+          style={{
+            background: 'transparent',
+            border: '1px solid rgba(180, 145, 155, 0.3)',
+            borderRadius: '4px',
+            padding: '0.5rem 1rem',
+            color: 'rgba(244, 239, 228, 0.85)',
+            fontSize: '0.7rem',
+            fontFamily: "'Playfair Display', Georgia, serif",
+            letterSpacing: '0.1em',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            opacity: appeared ? 1 : 0,
+            whiteSpace: 'nowrap',
+          }}
+          onMouseOver={(e) => {
+            e.target.style.background = 'rgba(160, 120, 135, 0.1)';
+            e.target.style.borderColor = 'rgba(160, 120, 135, 0.5)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.background = 'transparent';
+            e.target.style.borderColor = 'rgba(180, 145, 155, 0.3)';
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          RESUME
+        </a>
       </div>
 
       {/* CONTENT AREA */}
@@ -1431,14 +1477,14 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   <h2 style={{
                     ...styles.paneTitle,
                     textShadow: reelsHovered 
-                      ? '0 0 30px rgba(180, 145, 155, 0.5), 0 0 60px rgba(180, 145, 155, 0.2)' 
-                      : '0 0 15px rgba(180, 145, 155, 0.2)',
+                      ? '0 0 25px rgba(160, 120, 135, 0.4)' 
+                      : '0 0 12px rgba(140, 130, 140, 0.15)',
                   }}>
                     Reels
                   </h2>
                 </div>
 
-                {/* Dividing line - gold accent */}
+                {/* Dividing line - subtle accent */}
                 <div style={{
                   ...styles.dividingLine,
                   opacity: glassOpen ? 0 : 1,
@@ -1458,8 +1504,8 @@ function ActingWingContent({ transitioning, onBack, onViewChange, startInVoiceOv
                   <h2 style={{
                     ...styles.paneTitle,
                     textShadow: galleriesHovered 
-                      ? '0 0 30px rgba(180, 145, 155, 0.5), 0 0 60px rgba(180, 145, 155, 0.2)' 
-                      : '0 0 15px rgba(180, 145, 155, 0.2)',
+                      ? '0 0 25px rgba(160, 120, 135, 0.4)' 
+                      : '0 0 12px rgba(140, 130, 140, 0.15)',
                   }}>
                     Galleries
                   </h2>
@@ -1902,7 +1948,44 @@ function ModelingWingContent({ transitioning, onBack }) {
         }}>
           MODELING
         </h1>
-        <div style={{ width: '40px' }} />
+        {/* Download Comp Card Button */}
+        <a 
+          href="/documents/EmeryScott-CompCard.pdf" 
+          download="EmeryScott-CompCard.pdf"
+          style={{
+            background: 'transparent',
+            border: '1px solid rgba(200, 180, 170, 0.4)',
+            borderRadius: '4px',
+            padding: '0.5rem 1rem',
+            color: 'rgba(230, 220, 215, 0.9)',
+            fontSize: '0.7rem',
+            fontFamily: "'Playfair Display', Georgia, serif",
+            letterSpacing: '0.1em',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            opacity: appeared ? 1 : 0,
+            whiteSpace: 'nowrap',
+          }}
+          onMouseOver={(e) => {
+            e.target.style.background = 'rgba(160, 120, 135, 0.12)';
+            e.target.style.borderColor = 'rgba(160, 120, 135, 0.5)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.background = 'transparent';
+            e.target.style.borderColor = 'rgba(200, 180, 170, 0.4)';
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          COMP CARD
+        </a>
       </div>
 
       {/* CONTENT - Scrollable */}
@@ -2442,19 +2525,28 @@ const styles = {
   heroSection: {
     position: 'relative',
     width: '100%',
-    height: '100vh',
+    minHeight: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1a1210',
     zIndex: 10,
   },
   heroImageContainer: {
     width: '100%',
     height: '100%',
-    position: 'relative',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   heroImage: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
-    objectPosition: 'center top',
+    objectFit: 'contain',
+    objectPosition: 'center',
     display: 'block',
   },
   nameBlock: {
@@ -2467,24 +2559,26 @@ const styles = {
     transition: 'opacity 1.5s ease, transform 1.5s ease',
   },
   firstName: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
-    fontWeight: 500,
-    letterSpacing: '0.06em',
-    color: '#f4efe4',
-    textShadow: '3px 3px 25px rgba(0, 0, 0, 0.5)',
+    fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
+    fontSize: 'clamp(3rem, 8vw, 7rem)',
+    fontWeight: 400,
+    letterSpacing: '0.12em',
+    color: '#f8f4ed',
+    textShadow: '2px 2px 20px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.5)',
     lineHeight: 1,
     margin: 0,
+    textTransform: 'uppercase',
   },
   lastName: {
-    fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
-    fontWeight: 500,
-    letterSpacing: '0.06em',
-    color: '#f4efe4',
-    textShadow: '3px 3px 25px rgba(0, 0, 0, 0.5)',
+    fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
+    fontSize: 'clamp(3rem, 8vw, 7rem)',
+    fontWeight: 400,
+    letterSpacing: '0.12em',
+    color: '#f8f4ed',
+    textShadow: '2px 2px 20px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.5)',
     lineHeight: 1,
     margin: 0,
+    textTransform: 'uppercase',
   },
   titleBlock: { marginTop: '1rem' },
   titleLine: {
@@ -2759,7 +2853,7 @@ const styles = {
   },
   headerBackButton: {
     background: 'transparent',
-    // Subtle gold tint on border
+    // Subtle muted border
     border: '1px solid rgba(180, 145, 155, 0.2)',
     borderRadius: '50%',
     width: '40px',
@@ -2779,7 +2873,7 @@ const styles = {
     margin: 0,
     transition: 'opacity 0.4s ease',
     textAlign: 'center',
-    // Subtle gold highlight
+    // Subtle muted highlight
     textShadow: '0 0 30px rgba(180, 145, 155, 0.15)',
   },
   contentArea: {
@@ -2838,8 +2932,8 @@ const styles = {
     transform: 'translateX(-50%)',
     height: '70%',
     width: '1px',
-    // Gold accent
-    background: 'linear-gradient(to bottom, transparent, rgba(180, 145, 155, 0.25), transparent)',
+    // Subtle taupe accent
+    background: 'linear-gradient(to bottom, transparent, rgba(150, 140, 135, 0.2), transparent)',
     zIndex: 20,
     transition: 'opacity 0.5s ease',
   },
@@ -3176,6 +3270,12 @@ const styles = {
 // KEYFRAMES
 // ============================================
 if (typeof document !== 'undefined') {
+  // Import Cinzel font for elegant name styling
+  const fontLink = document.createElement('link');
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap';
+  fontLink.rel = 'stylesheet';
+  document.head.appendChild(fontLink);
+  
   const style = document.createElement('style');
   style.textContent = `
     @keyframes soundWave {
