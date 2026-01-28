@@ -142,8 +142,8 @@ export default function EmeryScottPortfolio() {
       {/* Continuous background for Quote + About */}
       <div style={{
         backgroundImage: `url(${IMAGES.mainBg})`,
-        backgroundSize: '100% auto',
-        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#1a1210',
       }}>
@@ -237,8 +237,8 @@ function HeroSection() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Sync with candlelit reveal - visible after darkness lifts
-    const timer = setTimeout(() => setVisible(true), 1800);
+    // Name appears faster
+    const timer = setTimeout(() => setVisible(true), 600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -289,54 +289,87 @@ function QuoteSection() {
   return (
     <section ref={sectionRef} style={{
       position: 'relative',
-      padding: '4rem 2rem',
+      padding: '5rem 2rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: '40vh',
+      minHeight: '30vh',
     }}>
-      {/* Centered card */}
+      {/* Elegant horizontal card with brocade accent */}
       <div className="quote-card-mobile" style={{
-        maxWidth: '600px',
-        padding: 'clamp(2rem, 5vw, 3.5rem)',
-        backgroundImage: `url(${IMAGES.creamBackdrop})`,
-        backgroundColor: '#f5f0e6',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        boxShadow: '0 8px 40px rgba(0,0,0,0.3), 0 2px 10px rgba(0,0,0,0.2)',
+        maxWidth: '1000px',
+        width: '100%',
+        padding: 'clamp(2rem, 3vw, 2.5rem) clamp(3.5rem, 7vw, 7rem)',
+        background: 'linear-gradient(135deg, #fffef5 0%, #faf8f0 100%)',
+        border: '1px solid rgba(139, 115, 85, 0.15)',
+        boxShadow: '0 1px 20px rgba(0,0,0,0.06), inset 0 0 60px rgba(139, 115, 85, 0.03)',
         textAlign: 'center',
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
+        transform: visible ? 'translateY(0)' : 'translateY(20px)',
         transition: 'all 0.8s ease',
+        position: 'relative',
       }}>
-        <span style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: '3.5rem',
-          color: 'rgba(139, 90, 90, 0.25)',
-          display: 'block',
-          lineHeight: 0.5,
-          marginBottom: '1.5rem',
-        }}>"</span>
+        {/* Subtle corner flourishes for brocade hint */}
+        <div style={{
+          position: 'absolute',
+          top: '12px',
+          left: '12px',
+          width: '40px',
+          height: '40px',
+          borderTop: '1px solid rgba(139, 115, 85, 0.2)',
+          borderLeft: '1px solid rgba(139, 115, 85, 0.2)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          top: '12px',
+          right: '12px',
+          width: '40px',
+          height: '40px',
+          borderTop: '1px solid rgba(139, 115, 85, 0.2)',
+          borderRight: '1px solid rgba(139, 115, 85, 0.2)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '12px',
+          left: '12px',
+          width: '40px',
+          height: '40px',
+          borderBottom: '1px solid rgba(139, 115, 85, 0.2)',
+          borderLeft: '1px solid rgba(139, 115, 85, 0.2)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '12px',
+          right: '12px',
+          width: '40px',
+          height: '40px',
+          borderBottom: '1px solid rgba(139, 115, 85, 0.2)',
+          borderRight: '1px solid rgba(139, 115, 85, 0.2)',
+        }} />
+        
         <p style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: 'clamp(1rem, 2.2vw, 1.3rem)',
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: 'clamp(1.15rem, 2.2vw, 1.6rem)',
           fontWeight: 400,
           fontStyle: 'italic',
-          lineHeight: 1.9,
-          color: '#3d3530',
-          margin: 0,
+          lineHeight: 1.65,
+          color: 'rgba(50, 40, 35, 0.88)',
+          margin: '0 auto',
+          maxWidth: '820px',
+          letterSpacing: '0.02em',
         }}>
           I have been with story. I have gone without. In only one of those states 
           did I feel I could truly live and so it lives always.
         </p>
         <p style={{
           marginTop: '1.5rem',
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: '0.85rem',
+          fontFamily: "'Playfair Display', Georgia, serif",
+          fontSize: '0.75rem',
           fontWeight: 500,
-          letterSpacing: '0.15em',
-          color: '#5a4a40',
-        }}>— E. Scott</p>
+          letterSpacing: '0.2em',
+          color: 'rgba(80, 65, 55, 0.7)',
+          textTransform: 'uppercase',
+        }}>E. Scott</p>
       </div>
     </section>
   );
@@ -737,8 +770,8 @@ function ReviewsSection() {
                 display: 'inline-block',
                 verticalAlign: 'top',
                 whiteSpace: 'normal',
-                width: '260px',
-                marginRight: '100px',
+                width: '380px',
+                marginRight: '120px',
               }}
             >
               <span style={{
@@ -746,7 +779,7 @@ function ReviewsSection() {
                 fontSize: '19px',
                 fontWeight: 400,
                 fontStyle: 'italic',
-                color: '#F6ECE9',
+                color: '#FFFEF5',
                 lineHeight: 1.4,
                 display: 'block',
                 marginBottom: '10px',
@@ -760,7 +793,7 @@ function ReviewsSection() {
                 fontWeight: 500,
                 textTransform: 'uppercase',
                 letterSpacing: '2px',
-                color: '#F6ECE9',
+                color: '#FFFEF5',
                 opacity: 0.6,
                 display: 'block',
                 textShadow: '0 1px 3px rgba(0,0,0,0.4)',
@@ -1070,8 +1103,8 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/acting-bg.png)',
-        backgroundSize: '100% auto',
-        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         opacity: showActingBg ? 1 : 0,
         zIndex: 1,
@@ -1082,8 +1115,8 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: 'url(/images/Backdrops/voiceover-bg.png)',
-        backgroundSize: '100% auto',
-        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         opacity: showVoiceOverBg ? 1 : 0,
         zIndex: 2,
@@ -1095,24 +1128,24 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: `url(${IMAGES.modelingBg})`,
-        backgroundSize: '100% auto',
-        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         opacity: showModelingBg && !modelingGallery ? 1 : 0,
         zIndex: 1,
-        transition: 'opacity 0.8s ease',
+        transition: 'opacity 1s ease',
       }} />
       
       {/* Expanded: When gallery is selected */}
       <div style={{
         ...styles.rotundaBackground,
         backgroundImage: `url(${IMAGES.modelingBgExpanded})`,
-        backgroundSize: '100% auto',
-        backgroundPosition: 'top center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         opacity: showModelingBg && modelingGallery ? 1 : 0,
-        zIndex: 1,
-        transition: 'opacity 0.8s ease',
+        zIndex: 2,
+        transition: 'opacity 1s ease',
       }} />
       
       {/* Writing: Warm parchment with script */}
@@ -1668,86 +1701,154 @@ function GalleriesContent({ isActive }) {
   const galleryItems = viewMode === 'performances' ? performanceItems : headshotItems;
 
   return (
-    <div style={styles.galleriesContentContainer}>
-      {/* Toggle Button */}
+    <div style={{...styles.galleriesContentContainer, position: 'relative'}}>
+      {/* Minimal floating toggle - top right corner */}
       <button
         onClick={() => setViewMode(viewMode === 'performances' ? 'headshots' : 'performances')}
         style={{
           position: 'absolute',
-          top: '1rem',
+          top: '0',
           right: '2rem',
-          background: 'rgba(244, 239, 228, 0.1)',
-          border: '1px solid rgba(244, 239, 228, 0.3)',
-          borderRadius: '4px',
-          padding: '0.5rem 1.2rem',
-          color: 'rgba(244, 239, 228, 0.85)',
-          fontSize: '0.75rem',
+          background: 'transparent',
+          border: 'none',
+          padding: '0.5rem',
+          color: 'rgba(232, 223, 208, 0.6)',
+          fontSize: '0.7rem',
           fontFamily: "'Playfair Display', Georgia, serif",
-          letterSpacing: '0.1em',
+          letterSpacing: '0.15em',
           cursor: 'pointer',
-          transition: 'all 0.3s ease',
+          transition: 'color 0.3s ease',
           textTransform: 'uppercase',
           zIndex: 10,
         }}
         onMouseOver={(e) => {
-          e.target.style.background = 'rgba(160, 120, 135, 0.15)';
-          e.target.style.borderColor = 'rgba(160, 120, 135, 0.5)';
+          e.target.style.color = 'rgba(232, 223, 208, 0.95)';
         }}
         onMouseOut={(e) => {
-          e.target.style.background = 'rgba(244, 239, 228, 0.1)';
-          e.target.style.borderColor = 'rgba(244, 239, 228, 0.3)';
+          e.target.style.color = 'rgba(232, 223, 208, 0.6)';
         }}
       >
-        {viewMode === 'performances' ? 'Headshots' : 'Performances'}
+        {viewMode === 'performances' ? '→ Headshots' : '→ Performances'}
       </button>
       
       {/* Gallery Items */}
       {viewMode === 'performances' ? (
-        // Performance cards with descriptions
-        galleryItems.map((item) => (
-        <div 
-          key={item.id}
-          onClick={() => isActive && setExpandedId(expandedId === item.id ? null : item.id)}
-          style={{
-            ...styles.galleryCard,
-            cursor: isActive ? 'pointer' : 'default',
-            pointerEvents: isActive ? 'auto' : 'none',
-          }}
-        >
-          <div style={styles.galleryCardImage}>
-            <img 
-              src={item.image} 
-              alt={item.title}
+        // Performance cards - horizontal layout with click to expand
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem',
+          width: '100%',
+          paddingTop: '1rem',
+        }}>
+          {galleryItems.map((item) => (
+            <div 
+              key={item.id}
+              onClick={() => isActive && setExpandedId(expandedId === item.id ? null : item.id)}
               style={{
+                display: 'flex',
+                gap: '1.5rem',
                 width: '100%',
-                height: '100%',
-                objectFit: 'cover',
+                cursor: isActive ? 'pointer' : 'default',
+                transition: 'all 0.3s ease',
+                opacity: isActive ? 1 : 0.7,
+                pointerEvents: isActive ? 'auto' : 'none',
               }}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
+            >
+              {/* Left: Image */}
+              <div style={{
+                flex: '0 0 clamp(180px, 30%, 240px)',
+                aspectRatio: '3/4',
+                overflow: 'hidden',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+                transition: 'box-shadow 0.3s ease',
               }}
-            />
-            <span style={{...styles.galleryCardPlaceholder, display: 'none'}}>Image</span>
-          </div>
-          <div style={styles.galleryCardText}>
-            <h3 style={styles.galleryCardTitle}>{item.title}</h3>
-            <p style={styles.galleryCardRole}>{item.role}</p>
-            <p style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: '0.85rem',
-              color: 'rgba(232, 223, 208, 0.7)',
-              lineHeight: 1.5,
-              marginTop: '0.5rem',
-              maxHeight: expandedId === item.id ? '200px' : '0',
-              overflow: 'hidden',
-              transition: 'max-height 0.4s ease',
-            }}>
-              {item.description}
-            </p>
-          </div>
+              onMouseOver={(e) => {
+                if (isActive) e.currentTarget.style.boxShadow = '0 4px 20px rgba(160, 120, 135, 0.25)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.15)';
+              }}
+              >
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+              
+              {/* Right: Text */}
+              <div style={{
+                flex: '1',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  gap: '0.5rem',
+                  marginBottom: '0.5rem',
+                }}>
+                  <h3 style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+                    fontWeight: 500,
+                    color: 'rgba(232, 223, 208, 0.95)',
+                    margin: 0,
+                  }}>
+                    {item.title}
+                  </h3>
+                  {/* Click hint */}
+                  {isActive && expandedId !== item.id && (
+                    <span style={{
+                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontSize: '0.7rem',
+                      fontStyle: 'italic',
+                      color: 'rgba(160, 120, 135, 0.5)',
+                    }}>
+                      (click for details)
+                    </span>
+                  )}
+                </div>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: '0.9rem',
+                  color: 'rgba(232, 223, 208, 0.7)',
+                  margin: '0 0 0.75rem 0',
+                  letterSpacing: '0.05em',
+                }}>
+                  {item.role}
+                </p>
+                
+                {/* Expandable description */}
+                <div style={{
+                  maxHeight: expandedId === item.id ? '200px' : '0',
+                  overflow: 'hidden',
+                  transition: 'max-height 0.4s ease',
+                }}>
+                  <p style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: '0.9rem',
+                    color: 'rgba(232, 223, 208, 0.75)',
+                    lineHeight: 1.7,
+                    marginTop: '0.5rem',
+                    fontStyle: 'italic',
+                  }}>
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))
       ) : (
         // Headshots grid - simple, clean layout
         galleryItems.map((item) => (
@@ -1757,14 +1858,14 @@ function GalleriesContent({ isActive }) {
               width: 'calc(50% - 1rem)',
               aspectRatio: '3/4',
               overflow: 'hidden',
-              border: '1px solid rgba(232, 223, 208, 0.2)',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
               transition: 'all 0.3s ease',
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(160, 120, 135, 0.4)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(160, 120, 135, 0.2)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(232, 223, 208, 0.2)';
+              e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.12)';
             }}
           >
             <img 
@@ -2196,9 +2297,6 @@ function ModelingWingContent({ transitioning, onBack, onGalleryChange }) {
                   background: openGallery === gallery 
                     ? 'rgba(160, 120, 135, 0.2)' 
                     : 'rgba(160, 120, 135, 0.08)',
-                  borderColor: openGallery === gallery 
-                    ? 'rgba(120, 90, 105, 0.5)' 
-                    : 'rgba(120, 90, 105, 0.3)',
                 }}
               >
                 {gallery.charAt(0).toUpperCase() + gallery.slice(1)}
@@ -2421,7 +2519,29 @@ Some journeys, the river knew, only end so that others can begin.`
       padding: '0',
       paddingTop: '1rem',
     }}>
-      {/* Fixed square container with internal scroll */}
+      {/* HEADER - Outside constrained container to align with other wings */}
+      <div style={styles.headerLine}>
+        <button style={{
+          ...styles.headerBackButton,
+          borderColor: 'rgba(140, 110, 80, 0.35)',
+          color: 'rgba(100, 80, 60, 0.9)',
+        }} onClick={onBack}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <h1 style={{
+          ...styles.headerTitle,
+          opacity: appeared ? 1 : 0,
+          color: 'rgba(60, 45, 30, 0.9)',
+          textShadow: '0 0 30px rgba(180, 145, 125, 0.25)',
+        }}>
+          WRITING
+        </h1>
+        <div style={{ width: '40px' }} />
+      </div>
+      
+      {/* Content container with internal scroll */}
       <div style={{
         width: '100%',
         maxWidth: '900px',
@@ -2431,27 +2551,6 @@ Some journeys, the river knew, only end so that others can begin.`
         flexDirection: 'column',
         marginTop: '0',
       }}>
-        {/* HEADER - using standard headerLine style */}
-        <div style={styles.headerLine}>
-          <button style={{
-            ...styles.headerBackButton,
-            borderColor: 'rgba(140, 110, 80, 0.35)',
-            color: 'rgba(100, 80, 60, 0.9)',
-          }} onClick={onBack}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <h1 style={{
-            ...styles.headerTitle,
-            opacity: appeared ? 1 : 0,
-            color: 'rgba(60, 45, 30, 0.9)',
-            textShadow: '0 0 30px rgba(180, 145, 125, 0.25)',
-          }}>
-            WRITING
-          </h1>
-          <div style={{ width: '40px' }} />
-        </div>
 
         {/* Content area - scrollable */}
         <div style={{
@@ -2637,7 +2736,8 @@ const styles = {
   heroSection: {
     position: 'relative',
     width: '100%',
-    minHeight: '100vh',
+    minHeight: '110vh',
+    height: '110vh',
     zIndex: 10,
   },
   heroImageContainer: {
@@ -2701,50 +2801,45 @@ const styles = {
   aboutSection: {
     position: 'relative',
     zIndex: 10,
-    padding: 'clamp(4vh, 8vh, 10vh) clamp(4vw, 6vw, 8vw) clamp(6vh, 12vh, 15vh)',
+    padding: 'clamp(6vh, 10vh, 12vh) clamp(4vw, 6vw, 8vw)',
     background: 'transparent',
   },
   aboutLayout: {
     display: 'flex',
-    gap: 'clamp(2rem, 5vw, 6rem)',
-    alignItems: 'flex-start',
-    maxWidth: '1200px',
+    gap: 'clamp(3rem, 6vw, 8rem)',
+    alignItems: 'center',
+    maxWidth: '1400px',
     margin: '0 auto',
     flexWrap: 'wrap',
     position: 'relative',
-    background: 'rgba(40, 30, 25, 0.35)',
-    padding: 'clamp(2rem, 4vw, 3.5rem)',
-    boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 0 40px rgba(0,0,0,0.1)',
-    backdropFilter: 'blur(8px)',
-    WebkitBackdropFilter: 'blur(8px)',
   },
   aboutTextSide: { 
-    flex: '1 1 55%',
-    minWidth: '280px',
-    maxWidth: '600px',
+    flex: '1 1 50%',
+    minWidth: '320px',
+    maxWidth: '650px',
   },
   aboutPhotoSide: { 
-    flex: '1 1 35%',
-    minWidth: '280px',
-    maxWidth: '480px',
+    flex: '1 1 38%',
+    minWidth: '320px',
+    maxWidth: '500px',
     position: 'relative',
   },
   aboutLabel: {
     fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    letterSpacing: '0.35em',
+    fontSize: '0.75rem',
+    fontWeight: 500,
+    letterSpacing: '0.3em',
     textTransform: 'uppercase',
-    color: 'rgba(180, 145, 155, 0.8)',
-    marginBottom: '2rem',
-    textShadow: '0 1px 3px rgba(0,0,0,0.4)',
+    color: 'rgba(200, 180, 170, 0.6)',
+    marginBottom: '2.5rem',
   },
   photoFrame: {
-    aspectRatio: '4/5',
-    background: 'rgba(0,0,0,0.08)',
-    border: 'clamp(4px, 1vw, 8px) solid rgba(139, 115, 85, 0.4)',
-    boxShadow: '0 4px 40px rgba(0,0,0,0.1), inset 0 0 20px rgba(0,0,0,0.05)',
+    aspectRatio: '3/4',
+    background: 'linear-gradient(135deg, #faf8f0 0%, #f5f0e6 100%)',
+    padding: '8px',
     overflow: 'hidden',
+    boxShadow: '0 4px 30px rgba(0,0,0,0.12), inset 0 0 40px rgba(139, 115, 85, 0.04)',
+    border: '1px solid rgba(139, 115, 85, 0.18)',
   },
   aboutPhoto: {
     width: '100%',
@@ -2753,19 +2848,18 @@ const styles = {
   },
   aboutOpening: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.2rem',
+    fontSize: '1.15rem',
     fontWeight: 400,
-    lineHeight: 1.8,
-    color: 'rgba(232, 223, 208, 0.8)',
-    marginBottom: '1.5rem',
-    textShadow: '0 1px 3px rgba(0,0,0,0.3)',
+    lineHeight: 1.9,
+    color: 'rgba(230, 220, 210, 0.95)',
+    marginBottom: '2rem',
   },
   aboutHeadline: {
     fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.8rem, 3.2vw, 2.5rem)',
+    fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)',
     fontWeight: 400,
-    lineHeight: 1.5,
-    color: '#e8dfd0',
+    lineHeight: 1.4,
+    color: 'rgba(240, 230, 220, 0.98)',
     margin: 0,
     textShadow: '0 2px 6px rgba(0,0,0,0.4)',
   },
@@ -2826,10 +2920,10 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 'clamp(4vh, 8vh, 10vh)',
-    paddingBottom: 'clamp(2vh, 4vh, 6vh)',
-    paddingLeft: 'clamp(3vw, 5vw, 7vw)',
-    paddingRight: 'clamp(3vw, 5vw, 7vw)',
+    paddingTop: 'clamp(2vh, 3vh, 4vh)',
+    paddingBottom: 'clamp(1vh, 2vh, 3vh)',
+    paddingLeft: 'clamp(1vw, 2vw, 3vw)',
+    paddingRight: 'clamp(1vw, 2vw, 3vw)',
     zIndex: 10,
     overflow: 'hidden',
     backgroundColor: '#1a2f2a',
@@ -3306,11 +3400,11 @@ const styles = {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: '1rem',
     fontStyle: 'italic',
-    fontWeight: 500,
-    letterSpacing: '0.1em',
-    color: 'rgba(45, 30, 40, 0.95)',
-    background: 'rgba(160, 120, 135, 0.08)',
-    border: '1px solid rgba(120, 90, 105, 0.3)',
+    fontWeight: 400,
+    letterSpacing: '0.12em',
+    color: 'rgba(50, 40, 35, 0.85)',
+    background: 'transparent',
+    border: 'none',
     padding: '0.75rem 2rem',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
