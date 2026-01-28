@@ -419,7 +419,7 @@ function AboutSection() {
         border: '1px solid rgba(139, 115, 85, 0.15)',
         boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 0 60px rgba(139, 115, 85, 0.03)',
         padding: 'clamp(3rem, 4vw, 4rem) clamp(3rem, 5vw, 6rem)',
-        minHeight: 'clamp(800px, 90vh, 1100px)',
+        minHeight: 'clamp(650px, 75vh, 850px)',
         maxWidth: '1400px',
         margin: '0 auto',
         opacity: visible ? 1 : 0,
@@ -565,6 +565,41 @@ function AboutSection() {
           </div>
         </div>
       </div>
+      
+      {/* Creeping brocade at bottom - fills empty space, pulls back when text expands */}
+      <div style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: bioExpanded ? '0px' : 'clamp(80px, 12vh, 150px)',
+        background: `
+          linear-gradient(to top, 
+            rgba(35, 28, 24, 0.9) 0%, 
+            transparent 100%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            rgba(139, 115, 85, 0.08) 0px,
+            transparent 2px,
+            transparent 12px,
+            rgba(139, 115, 85, 0.08) 14px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(139, 115, 85, 0.06) 0px,
+            transparent 2px,
+            transparent 12px,
+            rgba(139, 115, 85, 0.06) 14px
+          )
+        `,
+        backgroundBlendMode: 'multiply',
+        opacity: bioExpanded ? 0 : 1,
+        transition: 'height 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s ease',
+        pointerEvents: 'none',
+        zIndex: 5,
+      }} />
+      
       {/* Close brown box container */}
       </div>
     </section>
@@ -2755,7 +2790,7 @@ function StorytellerWord() {
           fontWeight: 600,
           color: '#e8dfd0',
           cursor: 'default',
-          transition: 'all 1.2s cubic-bezier(0.23, 1, 0.32, 1)',
+          transition: 'all 2s cubic-bezier(0.19, 1, 0.22, 1)',
           transform: hovered 
             ? 'translateZ(60px) translateY(-8px) rotate(-1deg)' 
             : 'translateZ(0) translateY(0) rotate(0deg)',
@@ -2909,7 +2944,7 @@ const styles = {
   },
   photoFrame: {
     width: '100%',
-    height: 'clamp(750px, 85vh, 1000px)',
+    height: 'clamp(600px, 70vh, 750px)',
     background: 'transparent',
     overflow: 'hidden',
     boxShadow: '0 6px 30px rgba(0,0,0,0.3)',
