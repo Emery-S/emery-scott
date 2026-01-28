@@ -297,7 +297,7 @@ function QuoteSection() {
     }}>
       {/* Elegant horizontal card with brocade accent */}
       <div className="quote-card-mobile" style={{
-        maxWidth: '1000px',
+        maxWidth: '850px',
         width: '100%',
         padding: 'clamp(2rem, 3vw, 2.5rem) clamp(3.5rem, 7vw, 7rem)',
         background: 'linear-gradient(135deg, #fffef5 0%, #faf8f0 100%)',
@@ -400,37 +400,92 @@ function AboutSection() {
 
   return (
     <section ref={sectionRef} style={styles.aboutSection}>
-      <div className="about-layout-desktop" style={styles.aboutLayout}>
+      {/* About label - OUTSIDE brown box, above top-left */}
+      <div style={{
+        maxWidth: '1400px',
+        margin: '0 auto',
+        paddingLeft: 'clamp(3rem, 5vw, 6rem)',
+        marginBottom: '1rem',
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 0.8s ease',
+      }}>
+        <p style={styles.aboutLabel}>About</p>
+      </div>
+      
+      {/* Brown box container - elegant with corner flourishes */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(35, 28, 24, 0.65) 0%, rgba(42, 34, 29, 0.7) 100%)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(139, 115, 85, 0.15)',
+        boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 0 60px rgba(139, 115, 85, 0.03)',
+        padding: 'clamp(4rem, 6vw, 7rem) clamp(3rem, 5vw, 6rem)',
+        maxWidth: '1400px',
+        margin: '0 auto',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'all 0.8s ease',
+        position: 'relative',
+      }}>
+        {/* Corner flourishes like quote card */}
+        <div style={{
+          position: 'absolute',
+          top: '16px',
+          left: '16px',
+          width: '50px',
+          height: '50px',
+          borderTop: '1px solid rgba(139, 115, 85, 0.25)',
+          borderLeft: '1px solid rgba(139, 115, 85, 0.25)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          top: '16px',
+          right: '16px',
+          width: '50px',
+          height: '50px',
+          borderTop: '1px solid rgba(139, 115, 85, 0.25)',
+          borderRight: '1px solid rgba(139, 115, 85, 0.25)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '16px',
+          left: '16px',
+          width: '50px',
+          height: '50px',
+          borderBottom: '1px solid rgba(139, 115, 85, 0.25)',
+          borderLeft: '1px solid rgba(139, 115, 85, 0.25)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '16px',
+          right: '16px',
+          width: '50px',
+          height: '50px',
+          borderBottom: '1px solid rgba(139, 115, 85, 0.25)',
+          borderRight: '1px solid rgba(139, 115, 85, 0.25)',
+        }} />
+        
+        <div className="about-layout-desktop" style={styles.aboutLayout}>
         <div className="about-text-side" style={styles.aboutTextSide}>
           <p style={{
-            ...styles.aboutLabel,
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 0.6s ease',
-          }}>About</p>
-          <p style={{
             ...styles.aboutOpening,
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(25px)',
-            transition: 'all 0.6s ease 0.15s',
+            fontSize: bioExpanded ? 'clamp(0.95rem, 1.8vw, 1.05rem)' : 'clamp(1.05rem, 2vw, 1.15rem)',
+            transition: 'font-size 0.4s ease',
           }}>
             As a lover of words, I ache to write too much. But I have decided to restrain myself. In brief...
           </p>
           <h2 style={{
             ...styles.aboutHeadline,
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(25px)',
-            transition: 'all 0.6s ease 0.3s',
+            fontSize: bioExpanded ? 'clamp(1.3rem, 2.2vw, 1.7rem)' : 'clamp(1.5rem, 2.6vw, 2rem)',
+            transition: 'font-size 0.4s ease',
           }}>
             I am a <StorytellerWord />
           </h2>
-          <div style={{
-            ...styles.aboutSubsection,
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(25px)',
-            transition: 'all 0.6s ease 0.45s',
-          }}>
-            <p style={styles.curiousText}>
+          <div style={styles.aboutSubsection}>
+            <p style={{
+              ...styles.curiousText,
+              fontSize: bioExpanded ? '0.85rem' : '0.95rem',
+              transition: 'font-size 0.4s ease',
+            }}>
               but are you not curious what I was going to write? You made it thus far
             </p>
             {!bioExpanded && (
@@ -438,13 +493,19 @@ function AboutSection() {
                 What is but one more click?
               </p>
             )}
+            {/* Wrapper with fixed overflow for smooth sliding */}
             <div style={{
-              ...styles.bioExpanded,
-              maxHeight: bioExpanded ? '1200px' : '0',
-              opacity: bioExpanded ? 1 : 0,
-              marginTop: bioExpanded ? '2rem' : '0',
+              overflow: 'hidden',
+              height: bioExpanded ? 'auto' : '0',
+              transition: 'height 0.5s ease',
             }}>
-              <div style={styles.bioContent}>
+              <div style={{
+                transform: bioExpanded ? 'translateY(0)' : 'translateY(-20px)',
+                opacity: bioExpanded ? 1 : 0,
+                transition: 'transform 0.5s ease, opacity 0.5s ease',
+                paddingTop: bioExpanded ? '2rem' : '0',
+              }}>
+                <div style={styles.bioContent}>
                 <p style={styles.bioParagraph}>
                   Actress, model, writer. My medium may shift, but the intent remains. 
                   Some call me a contradiction: ethereal in look, but when I open my mouth 
@@ -471,26 +532,39 @@ function AboutSection() {
                   You read it all did you? Fantastic!
                 </p>
               </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="about-photo-side" style={{
-          ...styles.aboutPhotoSide,
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.95)',
-          transition: 'all 0.8s ease 0.2s',
-        }}>
-          <div style={styles.photoFrame}>
+        <div className="about-photo-side" style={styles.aboutPhotoSide}>
+          <div style={{...styles.photoFrame, position: 'relative'}}>
+            {/* Base image - serious */}
             <img 
-              src={bioExpanded ? IMAGES.aboutPhotoExpanded : IMAGES.aboutPhoto} 
+              src={IMAGES.aboutPhoto} 
               alt="Emery" 
               style={{
                 ...styles.aboutPhoto,
-                transition: 'opacity 0.5s ease',
+                opacity: bioExpanded ? 0 : 1,
+                transition: 'opacity 0.6s ease',
+              }} 
+            />
+            {/* Expanded image - smiling - positioned on top */}
+            <img 
+              src={IMAGES.aboutPhotoExpanded} 
+              alt="Emery" 
+              style={{
+                ...styles.aboutPhoto,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                opacity: bioExpanded ? 1 : 0,
+                transition: 'opacity 0.6s ease',
               }} 
             />
           </div>
         </div>
+      </div>
+      {/* Close brown box container */}
       </div>
     </section>
   );
@@ -2806,22 +2880,21 @@ const styles = {
   },
   aboutLayout: {
     display: 'flex',
-    gap: 'clamp(3rem, 6vw, 8rem)',
-    alignItems: 'center',
-    maxWidth: '1400px',
-    margin: '0 auto',
+    gap: 'clamp(3rem, 5vw, 6rem)',
+    alignItems: 'flex-start',
+    width: '100%',
     flexWrap: 'wrap',
     position: 'relative',
   },
   aboutTextSide: { 
-    flex: '1 1 50%',
-    minWidth: '320px',
-    maxWidth: '650px',
+    flex: '1 1 40%',
+    minWidth: 'min(300px, 100%)',
+    maxWidth: '520px',
   },
   aboutPhotoSide: { 
-    flex: '1 1 38%',
-    minWidth: '320px',
-    maxWidth: '500px',
+    flex: '0 0 clamp(400px, 55%, 700px)',
+    minWidth: 'min(400px, 100%)',
+    maxWidth: '700px',
     position: 'relative',
   },
   aboutLabel: {
@@ -2834,12 +2907,11 @@ const styles = {
     marginBottom: '2.5rem',
   },
   photoFrame: {
-    aspectRatio: '3/4',
-    background: 'linear-gradient(135deg, #faf8f0 0%, #f5f0e6 100%)',
-    padding: '8px',
+    width: '100%',
+    height: 'clamp(550px, 65vh, 750px)',
+    background: 'transparent',
     overflow: 'hidden',
-    boxShadow: '0 4px 30px rgba(0,0,0,0.12), inset 0 0 40px rgba(139, 115, 85, 0.04)',
-    border: '1px solid rgba(139, 115, 85, 0.18)',
+    boxShadow: '0 6px 30px rgba(0,0,0,0.3)',
   },
   aboutPhoto: {
     width: '100%',
@@ -2848,40 +2920,41 @@ const styles = {
   },
   aboutOpening: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.15rem',
+    fontSize: 'clamp(1.1rem, 1.9vw, 1.35rem)',
     fontWeight: 400,
-    lineHeight: 1.9,
-    color: 'rgba(230, 220, 210, 0.95)',
-    marginBottom: '2rem',
+    lineHeight: 1.8,
+    color: 'rgba(235, 225, 215, 0.95)',
+    marginBottom: '2.5rem',
   },
   aboutHeadline: {
     fontFamily: "'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)',
-    fontWeight: 400,
-    lineHeight: 1.4,
-    color: 'rgba(240, 230, 220, 0.98)',
+    fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
+    fontWeight: 500,
+    lineHeight: 1.3,
+    color: 'rgba(245, 235, 225, 1)',
     margin: 0,
-    textShadow: '0 2px 6px rgba(0,0,0,0.4)',
+    marginBottom: '1.5rem',
+    textShadow: '0 2px 8px rgba(0,0,0,0.5)',
   },
   aboutSubsection: { marginTop: '2rem' },
   curiousText: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.15rem',
+    fontSize: 'clamp(1rem, 1.6vw, 1.2rem)',
     fontWeight: 400,
     lineHeight: 1.7,
-    color: 'rgba(200, 190, 195, 0.8)',
+    color: 'rgba(210, 200, 205, 0.85)',
     textShadow: '0 1px 3px rgba(0,0,0,0.3)',
   },
   clickReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.15rem',
+    fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)',
     fontWeight: 400,
-    color: 'rgba(220, 210, 215, 0.85)',
-    marginTop: '1.2rem',
+    color: 'rgba(225, 215, 220, 0.9)',
+    marginTop: '1.5rem',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: 'rgba(200, 190, 195, 0.4)',
-    textUnderlineOffset: '4px',
+    textDecorationColor: 'rgba(210, 200, 205, 0.5)',
+    textUnderlineOffset: '5px',
   },
   bioExpanded: {
     overflow: 'hidden',
@@ -2893,23 +2966,23 @@ const styles = {
   },
   bioParagraph: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.15rem',
+    fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)',
     fontWeight: 400,
-    lineHeight: 1.7,
-    color: 'rgba(232, 223, 208, 0.75)',
+    lineHeight: 1.65,
+    color: 'rgba(235, 225, 215, 0.8)',
     marginBottom: '1.2rem',
     textShadow: '0 1px 3px rgba(0,0,0,0.35)',
   },
   closeReveal: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
-    fontSize: '1.15rem',
+    fontSize: 'clamp(1.2rem, 1.8vw, 1.5rem)',
     fontWeight: 400,
-    color: 'rgba(220, 210, 215, 0.85)',
-    marginTop: '1.5rem',
+    color: 'rgba(225, 215, 220, 0.9)',
+    marginTop: '2rem',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: 'rgba(200, 190, 195, 0.4)',
-    textUnderlineOffset: '4px',
+    textDecorationColor: 'rgba(210, 200, 205, 0.5)',
+    textUnderlineOffset: '5px',
   },
 
   // Rotunda - FULL HEIGHT
