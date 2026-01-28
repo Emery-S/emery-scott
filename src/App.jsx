@@ -237,8 +237,8 @@ function HeroSection() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Sync with candlelit reveal - visible after darkness lifts
-    const timer = setTimeout(() => setVisible(true), 1800);
+    // Name appears faster
+    const timer = setTimeout(() => setVisible(true), 600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -737,8 +737,8 @@ function ReviewsSection() {
                 display: 'inline-block',
                 verticalAlign: 'top',
                 whiteSpace: 'normal',
-                width: '260px',
-                marginRight: '100px',
+                width: '380px',
+                marginRight: '120px',
               }}
             >
               <span style={{
@@ -746,7 +746,7 @@ function ReviewsSection() {
                 fontSize: '19px',
                 fontWeight: 400,
                 fontStyle: 'italic',
-                color: '#F6ECE9',
+                color: '#FFFEF5',
                 lineHeight: 1.4,
                 display: 'block',
                 marginBottom: '10px',
@@ -760,7 +760,7 @@ function ReviewsSection() {
                 fontWeight: 500,
                 textTransform: 'uppercase',
                 letterSpacing: '2px',
-                color: '#F6ECE9',
+                color: '#FFFEF5',
                 opacity: 0.6,
                 display: 'block',
                 textShadow: '0 1px 3px rgba(0,0,0,0.4)',
@@ -1669,37 +1669,52 @@ function GalleriesContent({ isActive }) {
 
   return (
     <div style={styles.galleriesContentContainer}>
-      {/* Toggle Button */}
-      <button
-        onClick={() => setViewMode(viewMode === 'performances' ? 'headshots' : 'performances')}
-        style={{
-          position: 'absolute',
-          top: '1rem',
-          right: '2rem',
-          background: 'rgba(244, 239, 228, 0.1)',
-          border: '1px solid rgba(244, 239, 228, 0.3)',
-          borderRadius: '4px',
-          padding: '0.5rem 1.2rem',
-          color: 'rgba(244, 239, 228, 0.85)',
-          fontSize: '0.75rem',
+      {/* Title Section */}
+      <div style={{
+        width: '100%',
+        textAlign: 'center',
+        marginBottom: '1.5rem',
+      }}>
+        <h2 style={{
           fontFamily: "'Playfair Display', Georgia, serif",
-          letterSpacing: '0.1em',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          textTransform: 'uppercase',
-          zIndex: 10,
-        }}
-        onMouseOver={(e) => {
-          e.target.style.background = 'rgba(160, 120, 135, 0.15)';
-          e.target.style.borderColor = 'rgba(160, 120, 135, 0.5)';
-        }}
-        onMouseOut={(e) => {
-          e.target.style.background = 'rgba(244, 239, 228, 0.1)';
-          e.target.style.borderColor = 'rgba(244, 239, 228, 0.3)';
-        }}
-      >
-        {viewMode === 'performances' ? 'Headshots' : 'Performances'}
-      </button>
+          fontSize: 'clamp(1rem, 2vw, 1.4rem)',
+          fontWeight: 400,
+          fontStyle: 'italic',
+          letterSpacing: '0.2em',
+          color: 'rgba(232, 223, 208, 0.95)',
+          marginBottom: '1rem',
+        }}>
+          Galleries
+        </h2>
+        
+        {/* Toggle Button - Below title */}
+        <button
+          onClick={() => setViewMode(viewMode === 'performances' ? 'headshots' : 'performances')}
+          style={{
+            background: 'rgba(244, 239, 228, 0.1)',
+            border: '1px solid rgba(244, 239, 228, 0.3)',
+            borderRadius: '4px',
+            padding: '0.5rem 1.2rem',
+            color: 'rgba(244, 239, 228, 0.85)',
+            fontSize: '0.75rem',
+            fontFamily: "'Playfair Display', Georgia, serif",
+            letterSpacing: '0.1em',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            textTransform: 'uppercase',
+          }}
+          onMouseOver={(e) => {
+            e.target.style.background = 'rgba(160, 120, 135, 0.15)';
+            e.target.style.borderColor = 'rgba(160, 120, 135, 0.5)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.background = 'rgba(244, 239, 228, 0.1)';
+            e.target.style.borderColor = 'rgba(244, 239, 228, 0.3)';
+          }}
+        >
+          {viewMode === 'performances' ? 'Headshots' : 'Performances'}
+        </button>
+      </div>
       
       {/* Gallery Items */}
       {viewMode === 'performances' ? (
@@ -2421,7 +2436,29 @@ Some journeys, the river knew, only end so that others can begin.`
       padding: '0',
       paddingTop: '1rem',
     }}>
-      {/* Fixed square container with internal scroll */}
+      {/* HEADER - Outside constrained container to align with other wings */}
+      <div style={styles.headerLine}>
+        <button style={{
+          ...styles.headerBackButton,
+          borderColor: 'rgba(140, 110, 80, 0.35)',
+          color: 'rgba(100, 80, 60, 0.9)',
+        }} onClick={onBack}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <h1 style={{
+          ...styles.headerTitle,
+          opacity: appeared ? 1 : 0,
+          color: 'rgba(60, 45, 30, 0.9)',
+          textShadow: '0 0 30px rgba(180, 145, 125, 0.25)',
+        }}>
+          WRITING
+        </h1>
+        <div style={{ width: '40px' }} />
+      </div>
+      
+      {/* Content container with internal scroll */}
       <div style={{
         width: '100%',
         maxWidth: '900px',
@@ -2431,27 +2468,6 @@ Some journeys, the river knew, only end so that others can begin.`
         flexDirection: 'column',
         marginTop: '0',
       }}>
-        {/* HEADER - using standard headerLine style */}
-        <div style={styles.headerLine}>
-          <button style={{
-            ...styles.headerBackButton,
-            borderColor: 'rgba(140, 110, 80, 0.35)',
-            color: 'rgba(100, 80, 60, 0.9)',
-          }} onClick={onBack}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <h1 style={{
-            ...styles.headerTitle,
-            opacity: appeared ? 1 : 0,
-            color: 'rgba(60, 45, 30, 0.9)',
-            textShadow: '0 0 30px rgba(180, 145, 125, 0.25)',
-          }}>
-            WRITING
-          </h1>
-          <div style={{ width: '40px' }} />
-        </div>
 
         {/* Content area - scrollable */}
         <div style={{
@@ -2637,7 +2653,8 @@ const styles = {
   heroSection: {
     position: 'relative',
     width: '100%',
-    minHeight: '100vh',
+    minHeight: '110vh',
+    height: '110vh',
     zIndex: 10,
   },
   heroImageContainer: {
@@ -2724,9 +2741,9 @@ const styles = {
     maxWidth: '600px',
   },
   aboutPhotoSide: { 
-    flex: '1 1 35%',
-    minWidth: '280px',
-    maxWidth: '480px',
+    flex: '1 1 42%',
+    minWidth: '320px',
+    maxWidth: '600px',
     position: 'relative',
   },
   aboutLabel: {
@@ -2828,8 +2845,8 @@ const styles = {
     justifyContent: 'center',
     paddingTop: 'clamp(4vh, 8vh, 10vh)',
     paddingBottom: 'clamp(2vh, 4vh, 6vh)',
-    paddingLeft: 'clamp(3vw, 5vw, 7vw)',
-    paddingRight: 'clamp(3vw, 5vw, 7vw)',
+    paddingLeft: 'clamp(1vw, 2vw, 3vw)',
+    paddingRight: 'clamp(1vw, 2vw, 3vw)',
     zIndex: 10,
     overflow: 'hidden',
     backgroundColor: '#1a2f2a',
