@@ -12,6 +12,8 @@ const IMAGES = {
   keyAspectsPhoto: '/images/Backdrops/KeyAspects.jpg',
   mainBg: '/images/Backdrops/main-bg.png',
   mainBgAlt: '/images/Backdrops/main-bg-alt.png',
+  modelingBg: '/images/Backdrops/modeling-bg.png',
+  modelingBgExpanded: '/images/Backdrops/modeling-bg-expanded.png',
 };
 
 // ============================================
@@ -740,10 +742,12 @@ function ReviewsSection() {
               }}
             >
               <span style={{
-                fontFamily: "'Times New Roman', Georgia, serif",
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: '19px',
+                fontWeight: 400,
+                fontStyle: 'italic',
                 color: '#F6ECE9',
-                lineHeight: 1.25,
+                lineHeight: 1.4,
                 display: 'block',
                 marginBottom: '10px',
                 textShadow: '0 1px 4px rgba(0,0,0,0.5)',
@@ -751,9 +755,9 @@ function ReviewsSection() {
                 {quote.text}
               </span>
               <span style={{
-                fontFamily: "'Arial', sans-serif",
+                fontFamily: "'Playfair Display', Georgia, serif",
                 fontSize: '10px',
-                fontWeight: 'bold',
+                fontWeight: 500,
                 textTransform: 'uppercase',
                 letterSpacing: '2px',
                 color: '#F6ECE9',
@@ -1039,6 +1043,7 @@ function FooterSection() {
 // ============================================
 const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTransitioning, doorAnimationPhase, selectedDoor, onOpenWing, onCloseWing, startInVoiceOver }, ref) {
   const [actingView, setActingView] = useState('choice');
+  const [modelingGallery, setModelingGallery] = useState(null); // Track which gallery is open in modeling
   
   // Reset actingView when leaving acting wing
   useEffect(() => {
@@ -1085,14 +1090,27 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
         transition: 'opacity 0.8s ease',
       }} />
       
-      {/* Modeling: Soft lavender with filigree */}
+      {/* Modeling: Two backgrounds - unexpanded and expanded */}
+      {/* Unexpanded: First load */}
       <div style={{
         ...styles.rotundaBackground,
-        backgroundImage: 'url(/images/Backdrops/modeling-bg.png)',
+        backgroundImage: `url(${IMAGES.modelingBg})`,
         backgroundSize: '100% auto',
         backgroundPosition: 'top center',
         backgroundRepeat: 'no-repeat',
-        opacity: showModelingBg ? 1 : 0,
+        opacity: showModelingBg && !modelingGallery ? 1 : 0,
+        zIndex: 1,
+        transition: 'opacity 0.8s ease',
+      }} />
+      
+      {/* Expanded: When gallery is selected */}
+      <div style={{
+        ...styles.rotundaBackground,
+        backgroundImage: `url(${IMAGES.modelingBgExpanded})`,
+        backgroundSize: '100% auto',
+        backgroundPosition: 'top center',
+        backgroundRepeat: 'no-repeat',
+        opacity: showModelingBg && modelingGallery ? 1 : 0,
         zIndex: 1,
         transition: 'opacity 0.8s ease',
       }} />
@@ -1176,6 +1194,7 @@ const RotundaSection = forwardRef(function RotundaSection({ activeWing, wingTran
           <ModelingWingContent 
             transitioning={wingTransitioning}
             onBack={onCloseWing}
+            onGalleryChange={setModelingGallery}
           />
         )}
 
@@ -1613,8 +1632,9 @@ function ReelsContent({ expandedVideo, onVideoSelect, isActive }) {
 // ============================================
 function GalleriesContent({ isActive }) {
   const [expandedId, setExpandedId] = useState(null);
+  const [viewMode, setViewMode] = useState('performances'); // 'performances' or 'headshots'
   
-  const galleryItems = [
+  const performanceItems = [
     { 
       id: 1, 
       title: 'The Merchant of Venice', 
@@ -1637,10 +1657,54 @@ function GalleriesContent({ isActive }) {
       description: 'An intimate character study following a woman\'s journey of self-discovery after unexpected loss.'
     },
   ];
+  
+  const headshotItems = [
+    { id: 1, image: '/images/headshots/acting-headshot-1.jpg', title: 'Dramatic' },
+    { id: 2, image: '/images/headshots/acting-headshot-2.jpg', title: 'Commercial' },
+    { id: 3, image: '/images/headshots/acting-headshot-3.jpg', title: 'Theatrical' },
+    { id: 4, image: '/images/headshots/acting-headshot-4.jpg', title: 'Character' },
+  ];
+  
+  const galleryItems = viewMode === 'performances' ? performanceItems : headshotItems;
 
   return (
     <div style={styles.galleriesContentContainer}>
-      {galleryItems.map((item) => (
+      {/* Toggle Button */}
+      <button
+        onClick={() => setViewMode(viewMode === 'performances' ? 'headshots' : 'performances')}
+        style={{
+          position: 'absolute',
+          top: '1rem',
+          right: '2rem',
+          background: 'rgba(244, 239, 228, 0.1)',
+          border: '1px solid rgba(244, 239, 228, 0.3)',
+          borderRadius: '4px',
+          padding: '0.5rem 1.2rem',
+          color: 'rgba(244, 239, 228, 0.85)',
+          fontSize: '0.75rem',
+          fontFamily: "'Playfair Display', Georgia, serif",
+          letterSpacing: '0.1em',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          textTransform: 'uppercase',
+          zIndex: 10,
+        }}
+        onMouseOver={(e) => {
+          e.target.style.background = 'rgba(160, 120, 135, 0.15)';
+          e.target.style.borderColor = 'rgba(160, 120, 135, 0.5)';
+        }}
+        onMouseOut={(e) => {
+          e.target.style.background = 'rgba(244, 239, 228, 0.1)';
+          e.target.style.borderColor = 'rgba(244, 239, 228, 0.3)';
+        }}
+      >
+        {viewMode === 'performances' ? 'Headshots' : 'Performances'}
+      </button>
+      
+      {/* Gallery Items */}
+      {viewMode === 'performances' ? (
+        // Performance cards with descriptions
+        galleryItems.map((item) => (
         <div 
           key={item.id}
           onClick={() => isActive && setExpandedId(expandedId === item.id ? null : item.id)}
@@ -1683,7 +1747,55 @@ function GalleriesContent({ isActive }) {
             </p>
           </div>
         </div>
-      ))}
+      ))
+      ) : (
+        // Headshots grid - simple, clean layout
+        galleryItems.map((item) => (
+          <div 
+            key={item.id}
+            style={{
+              width: 'calc(50% - 1rem)',
+              aspectRatio: '3/4',
+              overflow: 'hidden',
+              border: '1px solid rgba(232, 223, 208, 0.2)',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(160, 120, 135, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(232, 223, 208, 0.2)';
+            }}
+          >
+            <img 
+              src={item.image} 
+              alt={item.title}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+            <div style={{
+              display: 'none',
+              width: '100%',
+              height: '100%',
+              background: 'rgba(60, 50, 40, 0.3)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'rgba(232, 223, 208, 0.5)',
+              fontSize: '0.85rem',
+              fontFamily: "'Playfair Display', Georgia, serif",
+            }}>
+              {item.title}
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 }
@@ -1902,7 +2014,7 @@ function VoiceOverView() {
 // ============================================
 // MODELING WING CONTENT - Digitals + Galleries
 // ============================================
-function ModelingWingContent({ transitioning, onBack }) {
+function ModelingWingContent({ transitioning, onBack, onGalleryChange }) {
   const [appeared, setAppeared] = useState(false);
   const [openGallery, setOpenGallery] = useState(null); // 'runway', 'commercial', 'editorial'
 
@@ -1910,6 +2022,13 @@ function ModelingWingContent({ transitioning, onBack }) {
     const timer = setTimeout(() => setAppeared(true), 50);
     return () => clearTimeout(timer);
   }, []);
+  
+  // Notify parent when gallery changes
+  useEffect(() => {
+    if (onGalleryChange) {
+      onGalleryChange(openGallery);
+    }
+  }, [openGallery, onGalleryChange]);
 
   const toggleGallery = (gallery) => {
     setOpenGallery(openGallery === gallery ? null : gallery);
@@ -2075,11 +2194,11 @@ function ModelingWingContent({ transitioning, onBack }) {
                 style={{
                   ...styles.galleryButton,
                   background: openGallery === gallery 
-                    ? 'rgba(100, 80, 90, 0.15)' 
-                    : 'rgba(100, 80, 90, 0.05)',
+                    ? 'rgba(160, 120, 135, 0.2)' 
+                    : 'rgba(160, 120, 135, 0.08)',
                   borderColor: openGallery === gallery 
-                    ? 'rgba(100, 80, 90, 0.4)' 
-                    : 'rgba(100, 80, 90, 0.2)',
+                    ? 'rgba(120, 90, 105, 0.5)' 
+                    : 'rgba(120, 90, 105, 0.3)',
                 }}
               >
                 {gallery.charAt(0).toUpperCase() + gallery.slice(1)}
@@ -2304,23 +2423,16 @@ Some journeys, the river knew, only end so that others can begin.`
     }}>
       {/* Fixed square container with internal scroll */}
       <div style={{
-        width: 'min(90vw, 90vh)',
-        height: 'min(90vw, 90vh)',
-        maxWidth: '800px',
-        maxHeight: '800px',
+        width: '100%',
+        maxWidth: '900px',
+        height: 'min(85vh, 800px)',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         marginTop: '0',
       }}>
         {/* HEADER - using standard headerLine style */}
-        <div style={{
-          ...styles.headerLine,
-          padding: '0 2rem',
-          marginBottom: '1rem',
-          width: '100%',
-          maxWidth: 'none',
-        }}>
+        <div style={styles.headerLine}>
           <button style={{
             ...styles.headerBackButton,
             borderColor: 'rgba(140, 110, 80, 0.35)',
@@ -2526,10 +2638,6 @@ const styles = {
     position: 'relative',
     width: '100%',
     minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#1a1210',
     zIndex: 10,
   },
   heroImageContainer: {
@@ -2538,14 +2646,11 @@ const styles = {
     position: 'absolute',
     top: 0,
     left: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   heroImage: {
     width: '100%',
     height: '100%',
-    objectFit: 'contain',
+    objectFit: 'cover',
     objectPosition: 'center',
     display: 'block',
   },
@@ -2560,22 +2665,22 @@ const styles = {
   },
   firstName: {
     fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(3rem, 8vw, 7rem)',
+    fontSize: 'clamp(2.2rem, 6vw, 4.5rem)',
     fontWeight: 400,
     letterSpacing: '0.12em',
     color: '#f8f4ed',
-    textShadow: '2px 2px 20px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.5)',
+    textShadow: '2px 2px 20px rgba(0, 0, 0, 0.7)',
     lineHeight: 1,
     margin: 0,
     textTransform: 'uppercase',
   },
   lastName: {
     fontFamily: "'Cinzel', 'Playfair Display', Georgia, serif",
-    fontSize: 'clamp(3rem, 8vw, 7rem)',
+    fontSize: 'clamp(2.2rem, 6vw, 4.5rem)',
     fontWeight: 400,
     letterSpacing: '0.12em',
     color: '#f8f4ed',
-    textShadow: '2px 2px 20px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.5)',
+    textShadow: '2px 2px 20px rgba(0, 0, 0, 0.7)',
     lineHeight: 1,
     margin: 0,
     textTransform: 'uppercase',
@@ -2811,7 +2916,7 @@ const styles = {
     bottom: 0, left: 0, right: 0,
     padding: '2.5rem 1.5rem',
     textAlign: 'center',
-    background: 'linear-gradient(to top, rgba(30, 25, 20, 0.95) 0%, rgba(30, 25, 20, 0.7) 60%, transparent 100%)',
+    background: 'linear-gradient(to top, rgba(10, 20, 16, 0.95) 0%, rgba(15, 25, 20, 0.7) 60%, transparent 100%)',
   },
   doorTitle: {
     fontFamily: "'Playfair Display', Georgia, serif",
@@ -2846,9 +2951,9 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '90%',
-    maxWidth: '1200px',
-    padding: '0',
+    width: '100%',
+    maxWidth: 'none',
+    padding: '0 2rem',
     marginBottom: '1rem',
   },
   headerBackButton: {
@@ -3114,13 +3219,13 @@ const styles = {
   modelingSectionTitle: {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: 'clamp(1rem, 2vw, 1.3rem)',
-    fontWeight: 400,
+    fontWeight: 500,
     fontStyle: 'italic',
     letterSpacing: '0.2em',
-    color: 'rgba(230, 220, 215, 0.9)',
+    color: 'rgba(50, 35, 45, 0.95)',
     textAlign: 'center',
     marginBottom: '1.5rem',
-    textShadow: '0 0 20px rgba(180, 145, 155, 0.2)',
+    textShadow: '0 1px 2px rgba(255, 255, 255, 0.3)',
   },
   
   // Comp Card Layout - TRUE HORIZONTAL like a model card
@@ -3177,15 +3282,15 @@ const styles = {
   digitalLabel: {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: '0.7rem',
-    fontWeight: 500,
+    fontWeight: 600,
     letterSpacing: '0.1em',
-    color: 'rgba(220, 210, 200, 0.85)',
+    color: 'rgba(50, 35, 45, 0.9)',
     textAlign: 'center',
   },
   digitalFilename: {
     fontFamily: "'Cormorant Garamond', Georgia, serif",
     fontSize: '0.65rem',
-    color: 'rgba(180, 160, 150, 0.6)',
+    color: 'rgba(70, 55, 65, 0.75)',
     fontStyle: 'italic',
   },
   
@@ -3201,10 +3306,11 @@ const styles = {
     fontFamily: "'Playfair Display', Georgia, serif",
     fontSize: '1rem',
     fontStyle: 'italic',
+    fontWeight: 500,
     letterSpacing: '0.1em',
-    color: 'rgba(60, 45, 55, 0.9)',
-    background: 'rgba(60, 50, 55, 0.08)',
-    border: '1px solid rgba(80, 60, 70, 0.25)',
+    color: 'rgba(45, 30, 40, 0.95)',
+    background: 'rgba(160, 120, 135, 0.08)',
+    border: '1px solid rgba(120, 90, 105, 0.3)',
     padding: '0.75rem 2rem',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
